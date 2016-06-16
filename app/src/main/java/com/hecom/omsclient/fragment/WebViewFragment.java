@@ -968,7 +968,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
                     @Override
                     protected JSONObject onJsCall(ParamOpenLink args) {
                         Intent intent = new Intent(getActivity(), WebViewDemoActivity.class);
-                        intent.putExtra("mode", "url");
+                        intent.putExtra("isFromOpenLink", true);
                         intent.putExtra("url", args.getUrl());
                         startActivityForResult(intent, ACTIVITY_REQUEST_NEW_LINK);
                         return null;
@@ -1472,8 +1472,21 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
 //        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //        intent.addCategory(Intent.CATEGORY_HOME);
 //        startActivity(intent);
+
+        WebViewDemoActivity activity = (WebViewDemoActivity) getActivity();
+
         if (getActivity() != null) {
-            getActivity().finish();
+            if (activity.isFromOpenLink) {
+                getActivity().finish();
+            } else {
+                //返回桌面
+                Intent intent = new Intent(Intent.ACTION_MAIN);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addCategory(Intent.CATEGORY_HOME);
+                startActivity(intent);
+            }
+
+
         }
     }
 

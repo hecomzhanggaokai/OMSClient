@@ -120,5 +120,7 @@ public class JSTaskTypes {
 //    //选择时长
 //    public static final String DURATIONPICKER = "biz.util.durationpicker";
 
+    public static final String CHOSEN = "biz.util.chosen";
+
 
 }

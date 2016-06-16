@@ -21,6 +21,8 @@ import org.w3c.dom.Text;
 public class WebViewDemoActivity extends FragmentActivity {
 
     private WebViewFragment webViewFragment;
+    //如果是从openLink进入的话,则在onBack的时候直接finish
+    public boolean isFromOpenLink;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class WebViewDemoActivity extends FragmentActivity {
             if (!TextUtils.isEmpty(url)) {
                 bundle.putString("url", url);
             }
+            isFromOpenLink = intent.getBooleanExtra("isFromOpenLink", false);
         }
         webViewFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.webViewContainer, webViewFragment).commit();

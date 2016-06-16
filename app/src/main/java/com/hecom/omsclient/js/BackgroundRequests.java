@@ -30,6 +30,8 @@ import com.google.gson.reflect.TypeToken;
 import com.hecom.omsclient.R;
 import com.hecom.omsclient.application.OMSClientApplication;
 import com.hecom.omsclient.js.entity.BDPointInfo;
+import com.hecom.omsclient.js.entity.ChosenEntity;
+import com.hecom.omsclient.js.entity.ParamActionSheet;
 import com.hecom.omsclient.js.entity.ParamAlert;
 import com.hecom.omsclient.js.entity.ParamConfirm;
 import com.hecom.omsclient.js.entity.ParamPreloader;
@@ -299,63 +301,57 @@ public class BackgroundRequests /*implements OnRequestSavedListener*/ {
                 });
 
 //        // ACTION_SHEET
-//        jsInteraction.addJsResolver(JSTaskTypes.ACTION_SHEET,
-//                new JSResolverFactory() {
-//                    @Override
-//                    public JSInteraction.JsResolver create(int taskId) {
-//                        return new JSInteraction.JsResolver<ParamActionSheet>(
-//                                false) {
-//
-//                            void selectIndex(int index) {
-//                                JSONObject jsonObject = new JSONObject();
-//                                try {
-//                                    jsonObject.put("buttonIndex", index);
-//                                } catch (JSONException e) {
-//                                    e.printStackTrace();
-//                                }
-//                                setResult(jsonObject);
-//                            }
-//
-//                            @Override
-//                            protected JSONObject onJsCall(ParamActionSheet args) {
-//
-//                                new AlertDialog.Builder(mContext)
-//                                        .setTitle(args.getTitle())
-//                                        .setCancelable(true)
-//                                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
-//                                            @Override
-//                                            public void onCancel(DialogInterface dialog) {
-//                                                selectIndex(-1);
-//                                            }
-//                                        })
-//                                        .setSingleChoiceItems(
-//                                                args.getOtherButtons(),
-//                                                -1,
-//                                                new DialogInterface.OnClickListener() {
-//
-//                                                    public void onClick(
-//                                                            DialogInterface dialog,
-//                                                            int which) {
-//                                                        dialog.dismiss();
-//                                                        selectIndex(which);
-//                                                    }
-//                                                })
-//                                        .setNegativeButton(
-//                                                args.getCancelButton(),
-//                                                new DialogInterface.OnClickListener() {
-//                                                    @Override
-//                                                    public void onClick(
-//                                                            DialogInterface dialog,
-//                                                            int which) {
-//                                                        selectIndex(-1);
-//                                                    }
-//                                                }).show();
-//
-//                                return null;
-//                            }
-//                        };
-//                    }
-//                });
+        jsInteraction.addJsResolver(JSTaskTypes.CHOSEN,
+                new JSResolverFactory() {
+                    @Override
+                    public JSInteraction.JsResolver create(int taskId) {
+                        return new JSInteraction.JsResolver<ChosenEntity>(
+                                false) {
+
+                            void selectIndex(ChosenEntity.Item item) {
+                                if (item == null) {
+                                    setError(JSInteraction.ERROR_USER_CANCELLED);
+                                } else {
+                                    JSONObject jsonObject = new JSONObject();
+                                    try {
+                                        jsonObject.put("key", item.getKey());
+                                        jsonObject.put("value", item.getValue());
+                                    } catch (JSONException e) {
+                                        e.printStackTrace();
+                                    }
+                                    setResult(jsonObject);
+                                }
+                            }
+
+                            @Override
+                            protected JSONObject onJsCall(final ChosenEntity args) {
+
+                                new AlertDialog.Builder(mContext)
+                                        .setCancelable(true)
+                                        .setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                            @Override
+                                            public void onCancel(DialogInterface dialog) {
+                                                selectIndex(null);
+                                            }
+                                        })
+                                        .setSingleChoiceItems(
+                                                args.getKeys(),
+                                                -1,
+                                                new DialogInterface.OnClickListener() {
+
+                                                    public void onClick(
+                                                            DialogInterface dialog,
+                                                            int which) {
+                                                        dialog.dismiss();
+                                                        selectIndex(args.getSource()[which]);
+                                                    }
+                                                }).show();
+
+                                return null;
+                            }
+                        };
+                    }
+                });
 //
 //        //MODEL
 //        jsInteraction.addJsResolver(JSTaskTypes.MODEL_DIALOG, new JSResolverFactory() {
@@ -1266,7 +1262,6 @@ public class BackgroundRequests /*implements OnRequestSavedListener*/ {
 //                new Date().getTime(), status);
 //        recordHandler.insertOperRecords(vo);
 //    }
-
     public void showLoading(boolean visible, String text) {
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
