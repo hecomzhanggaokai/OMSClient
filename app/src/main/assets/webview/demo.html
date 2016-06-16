@@ -1,0 +1,57 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<title>New Document</title>
+<meta name="Generator" content="EditPlus">
+<meta name="Author" content="">
+<meta name="Keywords" content="">
+<meta name="Description" content="">
+<script language="JavaScript">
+	var price=100;
+	function wave() {
+		alert("123");
+		var iDom = document.getElementById(tagbtn);
+		iDom.innerHTML = "自己处理";
+		return 123;
+	}
+	function setTotalPrice() {
+		price+=100;
+		window.JavaScriptClient.setTotalPrice(price);
+	}
+	
+	function setOrder() {
+		window.JavaScriptClient.setOrder('商品','详情描述',123456);
+	}
+	function fixBtnState(tagbtn) {
+		setTotalPrice();
+		var iResult = window.JavaScriptClient.isAppInstalled("com.hecom.management");
+		var iDom = document.getElementById(tagbtn);
+		if (iDom) {
+			if (iResult == 1) {
+				iDom.innerHTML = "StartApp"
+			} else {
+				iDom.innerHTML = "Go2Alipay"
+			}
+		}
+	}
+
+	function handleStartOrDownload(app_name) {
+		var iAppName = app_name;
+		var iResult = window.JavaScriptClient.isAppInstalled(iAppName);
+		if (iResult == 1) {
+
+			window.JavaScriptClient.startApp(iAppName);
+
+		} else {
+			window.open("http://www.baidu.com/app.apk");
+		}
+	}
+</script>
+</head>
+
+<body onload="fixBtnState('tagbtn')">
+	<a id="tagbtn" href="#"
+		onclick="handleStartOrDownload('com.hecom.management)">Loading</a>
+	<button onclick="setTotalPrice()">改变</button>
+</body>
+</html>

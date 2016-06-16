@@ -1,0 +1,1 @@
+{"cache_topics_group":[{"cache_qos":2,"cache_topics":"logout"},{"cache_qos":2,"cache_topics":"integral"}]}

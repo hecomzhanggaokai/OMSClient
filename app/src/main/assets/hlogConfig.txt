@@ -1,0 +1,31 @@
+{
+    "hlogConfig": {
+        "recordStack": 0,
+        "loggersConfig": [
+            {
+                "name": "debug_push",
+                "level": 1,
+                "tags": "PushService,MyRecevicer"
+            },
+            {
+                "name": "debug_city_customer",
+                "level": 2,
+                "tags": "CustomerActivity,MapIdConverter,CityCustomerInfos,CityCustomerNumbers,CityCustomerRequester,CityCustomerRequest,PoiOverlay"
+            },
+             {
+                "name": "debug_location",
+                "level": 1,
+                "tags": "TimedService,TimedLocationService,SOSLocationConfigService,SOSLocationService,XMLGlobalParser,XMLLocationParser"
+            },
+            {
+                "name": "debug_upgrade",
+                "level": 2,
+                "tags": "UpgradeService"
+            },{
+                "name": "debug_sync_customer",
+                "level": 1,
+                "tags": "CustomerTest"
+            }
+        ]
+    }
+}

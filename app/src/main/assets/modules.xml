@@ -1,0 +1,1685 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module_config>
+
+    <modules
+        id="28"
+        icon="module title"
+        text="考勤管理"
+        type="cus_module" >
+
+        <module
+            id="33"
+            text="考勤"
+            title=""
+            type="sys_module" />
+
+        <module
+            id="34"
+            text="出差"
+            title=""
+            type="cus_module" >
+
+            <submodule
+                id="340"
+                text="开始出差"
+                title=""
+                type="cus_module" >
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.report_depart"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;30&quot;}"
+                    value="{&quot;text&quot;:&quot;出发地&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len30&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.report_destination"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;30&quot;}"
+                    value="{&quot;text&quot;:&quot;目的地&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len30&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.string1"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;任务&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len50&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+            </submodule>
+
+            <submodule
+                id="341"
+                text="结束出差"
+                title=""
+                type="cus_module" >
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.string4"
+                    source_metadata_column_code=""
+                    type="tsTextView"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;交通&quot;,&quot;var&quot;:&quot;v30_bd_accommodation_string4&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.string2"
+                    source_metadata_column_code="transport"
+                    type="tsList"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;交通工具&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.int2"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;单据(张)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;2&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.communication_fee"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;金额(元)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal2&quot;,&quot;displayHeight&quot;:&quot;2&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.string5"
+                    source_metadata_column_code=""
+                    type="tsTextView"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;住宿&quot;,&quot;var&quot;:&quot;v30_bd_accommodation_string5&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.int4"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;单据(张)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.hotel_fee"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;金额(元)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal2&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.string6"
+                    source_metadata_column_code=""
+                    type="tsTextView"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;出差补助&quot;,&quot;var&quot;:&quot;v30_bd_accommodation_string6&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.int6"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;天数&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal1&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.int7"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;单据(张)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.int8"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;金额(元)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal2&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.string7"
+                    source_metadata_column_code=""
+                    type="tsTextView"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;市内交通&quot;,&quot;var&quot;:&quot;v30_bd_accommodation_string7&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.int1"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;单据(张)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.int3"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;金额(元)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal2&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.string8"
+                    source_metadata_column_code=""
+                    type="tsTextView"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;其他&quot;,&quot;var&quot;:&quot;v30_bd_accommodation_string8&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.string9"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;项目&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len30&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.int5"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;单据(张)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.int9"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;金额(元)&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal2&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_accommodation.comments"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+            </submodule>
+        </module>
+    </modules>
+
+    <modules
+        id="29"
+        icon="module title"
+        text="客户拜访"
+        type="cus_module" >
+
+        <module
+            id="35"
+            text="拜访"
+            title=""
+            type="cus_module" >
+
+            <submodule
+                id="46"
+                text="今日拜访"
+                title=""
+                type="sys_module" />
+
+            <submodule
+                id="47"
+                text="临时拜访"
+                title=""
+                type="sys_module" />
+
+            <submodule
+                id="48"
+                text="拜访计划"
+                title=""
+                type="sys_module" />
+        </module>
+
+        <module
+            id="36"
+            text="订单"
+            title=""
+            type="cus_module" >
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.v30_md_customer_code"
+                source_metadata_column_code="v30_md_customer.name"
+                type="tsTextView"
+                validation="{&quot;notnull&quot;:&quot;1&quot;}"
+                value="{&quot;text&quot;:&quot;客户名称：&quot;,&quot;var&quot;:&quot;v30_md_customer_name&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code=""
+                source_metadata_column_code=""
+                type="tsInfoManager"
+                validation=""
+                value="{&quot;text&quot;:&quot;合计&quot;,&quot;quantify&quot;:&quot;元&quot;,&quot;operator&quot;:&quot;add&quot;,&quot;var1&quot;:&quot;v30_bd_order_dl.amount&quot;,&quot;var2&quot;:&quot;&quot;,&quot;display&quot;:&quot;0&quot;}">
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.v30_md_product_code"
+                    source_metadata_column_code="v30_md_product.name"
+                    type="tsEditTextSearch"
+                    validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;30&quot;}"
+                    value="{&quot;text&quot;:&quot;单品名称&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.goods_count"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;0&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000&quot;}}"
+                    value="{&quot;text&quot;:&quot;数量&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.amount"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;2&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;单价&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal2&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.v30_md_product_gift_code"
+                    source_metadata_column_code="v30_md_product.name"
+                    type="tsEditTextSearch"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;赠品名称&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.gift_count"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;0&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;数量&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+            </item>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code=""
+                source_metadata_column_code=""
+                type="tsLine"
+                validation=""
+                value=""/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.delivery_date"
+                source_metadata_column_code=""
+                type="tsCalendarView"
+                validation=""
+                value="{&quot;text&quot;:&quot;送货时间&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.v30_md_deliveryman_code"
+                source_metadata_column_code="v30_md_deliveryman.name"
+                type="tsEditTextSearch"
+                validation=""
+                value="{&quot;text&quot;:&quot;配送人&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.order_type"
+                source_metadata_column_code="order_type"
+                type="tsList"
+                validation=""
+                value="{&quot;text&quot;:&quot;订单类型&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.comments"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;length&quot;:&quot;200&quot;}"
+                value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+        </module>
+
+        <module
+            id="37"
+            text="执行促销"
+            title=""
+            type="cus_module" >
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.v30_md_customer_code"
+                source_metadata_column_code="v30_md_customer.name"
+                type="tsTextView"
+                validation="{&quot;notnull&quot;:&quot;1&quot;}"
+                value="{&quot;text&quot;:&quot;客户名称：&quot;,&quot;var&quot;:&quot;v30_md_customer_name&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.code"
+                source_metadata_column_code=""
+                type="tsTextView"
+                validation="{&quot;notnull&quot;:&quot;1&quot;}"
+                value="{&quot;text&quot;:&quot;促销编号：&quot;,&quot;var&quot;:&quot;v30_bd_promotion_code&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.starttime"
+                source_metadata_column_code=""
+                type="tsTextView"
+                validation=""
+                value="{&quot;text&quot;:&quot;开始时间：&quot;,&quot;var&quot;:&quot;v30_bd_promotion_starttime&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.endtime"
+                source_metadata_column_code=""
+                type="tsTextView"
+                validation=""
+                value="{&quot;text&quot;:&quot;结束时间：&quot;,&quot;var&quot;:&quot;v30_bd_promotion_endtime&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code=""
+                source_metadata_column_code=""
+                type="tsLine"
+                validation=""
+                value=""/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion_dl.photo1"
+                source_metadata_column_code=""
+                type="tsCamera"
+                validation=""
+                value="{&quot;text&quot;:&quot;堆头&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion_dl.photo2"
+                source_metadata_column_code=""
+                type="tsCamera"
+                validation=""
+                value="{&quot;text&quot;:&quot;端架&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion_dl.photo3"
+                source_metadata_column_code=""
+                type="tsCamera"
+                validation=""
+                value="{&quot;text&quot;:&quot;促销人员&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion_dl.photo4"
+                source_metadata_column_code=""
+                type="tsCamera"
+                validation=""
+                value="{&quot;text&quot;:&quot;POP&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+        </module>
+
+        <module
+            id="38"
+            text="巡店"
+            title=""
+            type="cus_module" >
+
+            <submodule
+                id="49"
+                text="照片打分"
+                title=""
+                type="cus_module" >
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.v30_md_customer_code"
+                    source_metadata_column_code="v30_md_customer.name"
+                    type="tsTextView"
+                    validation="{&quot;notnull&quot;:&quot;1&quot;}"
+                    value="{&quot;text&quot;:&quot;客户名称：&quot;,&quot;var&quot;:&quot;v30_md_customer_name&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.shelf_display_photo"
+                    source_metadata_column_code=""
+                    type="tsCamera"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;货架陈列&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.shelf_display_mark"
+                    source_metadata_column_code=""
+                    type="tsProcessBar"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;打分&quot;,&quot;max_value&quot;:&quot;10&quot;,&quot;quantify&quot;:&quot;分&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string14"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.mass_display_photo"
+                    source_metadata_column_code=""
+                    type="tsCamera"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;推头陈列&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.mass_display_mark"
+                    source_metadata_column_code=""
+                    type="tsProcessBar"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;打分&quot;,&quot;max_value&quot;:&quot;10&quot;,&quot;quantify&quot;:&quot;分&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string15"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.photo1"
+                    source_metadata_column_code=""
+                    type="tsCamera"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;POP&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string1"
+                    source_metadata_column_code=""
+                    type="tsProcessBar"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;打分&quot;,&quot;max_value&quot;:&quot;10&quot;,&quot;quantify&quot;:&quot;分&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string16"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.freezer_display_number"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;1&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;冻柜数量&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal1&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.int1"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;1&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;二次陈列数&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal1&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.remarks"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;length&quot;:&quot;200&quot;}"
+                    value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+            </submodule>
+
+            <submodule
+                id="50"
+                text="项目检查"
+                title=""
+                type="cus_module" >
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.v30_md_customer_code"
+                    source_metadata_column_code="v30_md_customer.name"
+                    type="tsTextView"
+                    validation="{&quot;notnull&quot;:&quot;1&quot;}"
+                    value="{&quot;text&quot;:&quot;客户名称：&quot;,&quot;var&quot;:&quot;v30_md_customer_name&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string2"
+                    source_metadata_column_code=""
+                    type="tsTextView"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;正常陈列&quot;,&quot;var&quot;:&quot;v30_bd_product_onsale_string2&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string3"
+                    source_metadata_column_code=""
+                    type="tsSelectBox"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;位置不达标&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string4"
+                    source_metadata_column_code=""
+                    type="tsSelectBox"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;陈列高度不达标&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string5"
+                    source_metadata_column_code=""
+                    type="tsSelectBox"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;比例不达标&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string6"
+                    source_metadata_column_code=""
+                    type="tsTextView"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;特殊陈列&quot;,&quot;var&quot;:&quot;v30_bd_product_onsale_string6&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string7"
+                    source_metadata_column_code=""
+                    type="tsSelectBox"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;位置与协议不一致&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string8"
+                    source_metadata_column_code=""
+                    type="tsSelectBox"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;面积与协议不一致&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string9"
+                    source_metadata_column_code=""
+                    type="tsSelectBox"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;品项与协议不一致&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string10"
+                    source_metadata_column_code=""
+                    type="tsTextView"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;综合&quot;,&quot;var&quot;:&quot;v30_bd_product_onsale_string10&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string11"
+                    source_metadata_column_code=""
+                    type="tsSelectBox"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;整洁度不达标&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string12"
+                    source_metadata_column_code=""
+                    type="tsSelectBox"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;广宣物料使用不达标&quot;}"/>
+
+                <item
+                    casCadeShowFieldDisplayNames=""
+                    casCadeShowFields=""
+                    event=""
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_product_onsale.string13"
+                    source_metadata_column_code=""
+                    type="tsSelectBox"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;价格违规&quot;}"/>
+            </submodule>
+        </module>
+
+        <module
+            id="39"
+            text="报销量"
+            title=""
+            type="cus_module" >
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_sales.v30_md_customer_code"
+                source_metadata_column_code="v30_md_customer.name"
+                type="tsTextView"
+                validation="{&quot;notnull&quot;:&quot;1&quot;}"
+                value="{&quot;text&quot;:&quot;客户名称&quot;,&quot;var&quot;:&quot;v30_md_customer_name&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code=""
+                source_metadata_column_code=""
+                type="tsInfoManager"
+                validation=""
+                value="{&quot;text&quot;:&quot;合计&quot;,&quot;quantify&quot;:&quot;元&quot;,&quot;operator&quot;:&quot;&quot;,&quot;var1&quot;:&quot;&quot;,&quot;var2&quot;:&quot;&quot;,&quot;display&quot;:&quot;1&quot;}">
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_sales_dl.v30_md_product_code"
+                    source_metadata_column_code="v30_md_product.name"
+                    type="tsEditTextSearch"
+                    validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;30&quot;}"
+                    value="{&quot;text&quot;:&quot;单品名称&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_sales_dl.current_stock"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;0&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;库存&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_sales_dl.int1"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;0&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;销量&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_sales_dl.retail_price"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;2&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;售价&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal2&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_sales_dl.string1"
+                    source_metadata_column_code="sale_status"
+                    type="tsList"
+                    validation=""
+                    value="{&quot;text&quot;:&quot;销售状况&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_sales_dl.expired_inventory_number"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;0&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;到期库存&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+            </item>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_sales.remarks"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;length&quot;:&quot;200&quot;}"
+                value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+        </module>
+    </modules>
+
+    <modules
+        id="30"
+        icon="module title"
+        text="订单管理"
+        type="cus_module" >
+
+        <module
+            id="40"
+            text="订单列表"
+            title=""
+            type="sys_module" />
+
+        <module
+            id="41"
+            text="下订单"
+            title=""
+            type="cus_module" >
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.v30_md_customer_code"
+                source_metadata_column_code="v30_md_customer.name"
+                type="tsEditTextSearch"
+                validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;30&quot;}"
+                value="{&quot;text&quot;:&quot;客户名称&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code=""
+                source_metadata_column_code=""
+                type="tsInfoManager"
+                validation=""
+                value="{&quot;text&quot;:&quot;合计&quot;,&quot;quantify&quot;:&quot;元&quot;,&quot;operator&quot;:&quot;add&quot;,&quot;var1&quot;:&quot;v30_bd_order_dl.amount&quot;,&quot;var2&quot;:&quot;&quot;,&quot;display&quot;:&quot;0&quot;}">
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.v30_md_product_code"
+                    source_metadata_column_code="v30_md_product.name"
+                    type="tsEditTextSearch"
+                    validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;30&quot;}"
+                    value="{&quot;text&quot;:&quot;单品名称&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.goods_count"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;0&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;数量&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.amount"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;2&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;单价&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal2&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code=""
+                    source_metadata_column_code=""
+                    type="tsLine"
+                    validation=""
+                    value=""/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.v30_md_product_gift_code"
+                    source_metadata_column_code="v30_md_product.name"
+                    type="tsEditTextSearch"
+                    validation="{&quot;length&quot;:&quot;30&quot;}"
+                    value="{&quot;text&quot;:&quot;赠品名称&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_order_dl.gift_count"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;0&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;数量&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+            </item>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.delivery_date"
+                source_metadata_column_code=""
+                type="tsCalendarView"
+                validation=""
+                value="{&quot;text&quot;:&quot;送货时间&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.v30_md_deliveryman_code"
+                source_metadata_column_code="v30_md_deliveryman.name"
+                type="tsEditTextSearch"
+                validation=""
+                value="{&quot;text&quot;:&quot;配送人&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.order_type"
+                source_metadata_column_code="order_type"
+                type="tsList"
+                validation=""
+                value="{&quot;text&quot;:&quot;订单类型&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_order.comments"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;length&quot;:&quot;200&quot;}"
+                value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+        </module>
+    </modules>
+
+    <modules
+        id="31"
+        icon="module title"
+        text="促销管理"
+        type="cus_module" >
+
+        <module
+            id="51"
+            text="新增申请"
+            title=""
+            type="cus_module" >
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.v30_md_customer_code"
+                source_metadata_column_code="v30_md_customer.name"
+                type="tsEditTextSearch"
+                validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;30&quot;}"
+                value="{&quot;text&quot;:&quot;客户名称&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code=""
+                source_metadata_column_code=""
+                type="tsInfoManager"
+                validation=""
+                value="{&quot;text&quot;:&quot;合计&quot;,&quot;quantify&quot;:&quot;元&quot;,&quot;operator&quot;:&quot;add&quot;,&quot;var1&quot;:&quot;v30_bd_promotion_supplies.amount&quot;,&quot;var2&quot;:&quot;&quot;,&quot;display&quot;:&quot;0&quot;}">
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_promotion_supplies.v30_md_supplies_code"
+                    source_metadata_column_code="v30_md_supplies.name"
+                    type="tsEditTextSearch"
+                    validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;30&quot;}"
+                    value="{&quot;text&quot;:&quot;物料名称&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_promotion_supplies.count"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;0&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;数量&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal0&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+                <item
+                    isMultiple="0"
+                    metadata_column_code="v30_bd_promotion_supplies.amount"
+                    source_metadata_column_code=""
+                    type="tsEditText"
+                    validation="{&quot;number&quot;:{&quot;floatlen&quot;:&quot;2&quot;,&quot;min&quot;:&quot;0&quot;,&quot;max&quot;:&quot;100000000&quot;}}"
+                    value="{&quot;text&quot;:&quot;金额&quot;,&quot;inputType&quot;:&quot;number&quot;,&quot;validation&quot;:&quot;decimal2&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+            </item>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.starttime"
+                source_metadata_column_code=""
+                type="tsCalendarTimeView"
+                validation=""
+                value="{&quot;text&quot;:&quot;开始时间&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.endtime"
+                source_metadata_column_code=""
+                type="tsCalendarTimeView"
+                validation=""
+                value="{&quot;text&quot;:&quot;结束时间&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.comments"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;length&quot;:&quot;200&quot;}"
+                value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+        </module>
+
+        <module
+            id="52"
+            text="促销执行"
+            title=""
+            type="cus_module" >
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.amount"
+                source_metadata_column_code="v30_md_customer.name"
+                type="tsTextView"
+                validation=""
+                value="{&quot;text&quot;:&quot;客户名称：&quot;,&quot;var&quot;:&quot;v30_md_customer_name&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.code"
+                source_metadata_column_code=""
+                type="tsTextView"
+                validation=""
+                value="{&quot;text&quot;:&quot;促销编号：&quot;,&quot;var&quot;:&quot;v30_bd_promotion_code&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.starttime"
+                source_metadata_column_code=""
+                type="tsTextView"
+                validation=""
+                value="{&quot;text&quot;:&quot;开始时间：&quot;,&quot;var&quot;:&quot;v30_bd_promotion_starttime&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion.endtime"
+                source_metadata_column_code=""
+                type="tsTextView"
+                validation=""
+                value="{&quot;text&quot;:&quot;结束时间：&quot;,&quot;var&quot;:&quot;v30_bd_promotion_endtime&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code=""
+                source_metadata_column_code=""
+                type="tsLine"
+                validation=""
+                value=""/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion_dl.photo1"
+                source_metadata_column_code=""
+                type="tsCamera"
+                validation=""
+                value="{&quot;text&quot;:&quot;堆头&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion_dl.photo2"
+                source_metadata_column_code=""
+                type="tsCamera"
+                validation=""
+                value="{&quot;text&quot;:&quot;端架&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion_dl.photo3"
+                source_metadata_column_code=""
+                type="tsCamera"
+                validation=""
+                value="{&quot;text&quot;:&quot;促销人员&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_bd_promotion_dl.photo4"
+                source_metadata_column_code=""
+                type="tsCamera"
+                validation=""
+                value="{&quot;text&quot;:&quot;POP&quot;,&quot;limit&quot;:&quot;3&quot;}"/>
+        </module>
+
+        <module
+            id="55"
+            text="促销申请列表"
+            title=""
+            type="sys_module" />
+
+        <module
+            id="56"
+            text="促销执行列表"
+            title=""
+            type="sys_module" />
+    </modules>
+
+    <modules
+        id="32"
+        icon="module title"
+        text="客户管理"
+        type="cus_module" >
+
+        <module
+            id="44"
+            text="新增客户"
+            title=""
+            type="cus_module" >
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.name"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;50&quot;}"
+                value="{&quot;text&quot;:&quot;客户名称&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len50&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.string1"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation=""
+                value="{&quot;text&quot;:&quot;送货电话&quot;,&quot;inputType&quot;:&quot;phone_number&quot;,&quot;validation&quot;:&quot;integer&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.address"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;100&quot;}"
+                value="{&quot;text&quot;:&quot;地址&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len100&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.terminal_type"
+                source_metadata_column_code="path_type"
+                type="tsList"
+                validation=""
+                value="{&quot;text&quot;:&quot;通路类型&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.cust_levels"
+                source_metadata_column_code="cust_levels"
+                type="tsList"
+                validation=""
+                value="{&quot;text&quot;:&quot;客户等级&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.layer_id"
+                source_metadata_column_code="t_layers.layer_name"
+                type="tsEditTextSearch"
+                validation="{&quot;notnull&quot;:&quot;1&quot;,&quot;length&quot;:&quot;30&quot;}"
+                value="{&quot;text&quot;:&quot;图层&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.contact_1_name"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;length&quot;:&quot;30&quot;}"
+                value="{&quot;text&quot;:&quot;联系人姓名&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len30&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.contact_1_title"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;length&quot;:&quot;30&quot;}"
+                value="{&quot;text&quot;:&quot;联系人职位&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len30&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.contact_1_tel"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation=""
+                value="{&quot;text&quot;:&quot;联系人电话&quot;,&quot;inputType&quot;:&quot;phone_number&quot;,&quot;validation&quot;:&quot;integer&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.contact_2_name"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;length&quot;:&quot;30&quot;}"
+                value="{&quot;text&quot;:&quot;联系人姓名&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len30&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.contact_2_title"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;length&quot;:&quot;30&quot;}"
+                value="{&quot;text&quot;:&quot;联系人职位&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len30&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.contact_2_tel"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation=""
+                value="{&quot;text&quot;:&quot;联系人电话&quot;,&quot;inputType&quot;:&quot;phone_number&quot;,&quot;validation&quot;:&quot;integer&quot;,&quot;displayHeight&quot;:&quot;1&quot;}"/>
+
+            <item
+                casCadeShowFieldDisplayNames=""
+                casCadeShowFields=""
+                event=""
+                isMultiple="0"
+                metadata_column_code="v30_md_customer.description"
+                source_metadata_column_code=""
+                type="tsEditText"
+                validation="{&quot;length&quot;:&quot;200&quot;}"
+                value="{&quot;text&quot;:&quot;备注&quot;,&quot;inputType&quot;:&quot;default&quot;,&quot;validation&quot;:&quot;len200&quot;,&quot;displayHeight&quot;:&quot;3&quot;}"/>
+        </module>
+    </modules>
+
+    <modules
+        id="54"
+        icon="module title"
+        text="拍照信息"
+        type="sys_module" />
+
+    <modules
+        id="84"
+        icon="module title"
+        text="拜访计划"
+        type="cus_module" >
+
+        <module
+            id="85"
+            text="计划列表"
+            title=""
+            type="sys_module" />
+
+        <module
+            id="86"
+            text="路线列表"
+            title=""
+            type="sys_module" />
+    </modules>
+
+</module_config>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>3</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="jquery-1.11.0.min.js"></script>
+	<script src="highcharts.js"></script>
+<script type="text/javascript">
+function drawChart(height,width,title,ytitle,xcols,data1){
+    var xcolsarr = new Array();
+    var xcols_str = xcols.split(",");
+    for (var i=0;i<xcols_str.length;i++){
+        xcolsarr.push(xcols_str[i]);
+    }
+    var data1_arr = new Array();
+    var data1_str = data1.split(",");
+    for (var i=0;i<data1_str.length;i++){
+        data1_arr.push(parseFloat(data1_str[i]));
+    }
+    $('#chart').highcharts({
+        chart: {
+        	height : height,
+        	width : width,
+        	type: 'column'
+        },
+        credits:{enabled:false},
+        title: {text: title},
+        xAxis: {
+            categories: xcolsarr
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ytitle
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+            }
+        },
+        legend: {
+        	enabled:false,
+            align: 'right',
+            x: -70,
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.x + '</b><br/>' +
+                    this.series.name + ': ' + this.y + '<br/>' ;
+            }
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                pointWidth:30,
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black, 0 0 3px black'
+                    }
+                },
+                showInLegend:true
+            }
+        },
+        series: [{
+            name: '市场',
+            data: data1_arr
+        }]
+    });
+}
+$(function () {
+	var height = "[!HEIGHT!]";
+	var width = "[!WIDTH!]";
+    var title = "[!HORIZONTAL_TILE!]";
+    var ytitle = "[!VERTICAL_TILE!]";
+    var xcols = "[!NAME!]";
+    var data1 = "[!NUM!]";
+    drawChart(height,width,title,ytitle,xcols,data1);
+});
+</script>
+    </head>
+    <body>
+        <div id="chart"></div>
+    </body>
+</html>

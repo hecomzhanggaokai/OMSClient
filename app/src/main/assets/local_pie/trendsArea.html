@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>2</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="jquery-1.11.0.min.js"></script>
+	<script src="highcharts.js"></script>
+<script type="text/javascript">
+function drawChart(height,width,title,ytitle,xcols,adddata,removedata,reservedata){
+    var xcolsarr = new Array();
+    var xcols_str = xcols.split(",");
+    for (var i=0;i<xcols_str.length;i++){
+        xcolsarr.push(xcols_str[i]);
+    }
+    var adddata_arr = new Array();
+    var adddata_str = adddata.split(",");
+    for (var i=0;i<adddata_str.length;i++){
+        adddata_arr.push(parseFloat(adddata_str[i]));
+    }
+    var removedata_arr = new Array();
+    var removedata_str = removedata.split(",");
+    for (var i=0;i<removedata_str.length;i++){
+        removedata_arr.push(parseFloat(removedata_str[i]));
+    }
+    var reservedata_arr = new Array();
+    var reservedata_str = reservedata.split(",");
+    for (var i=0;i<reservedata_str.length;i++){
+        reservedata_arr.push(parseFloat(reservedata_str[i]));
+    }
+    $('#chart').highcharts({
+        chart: {
+        	height : height,
+        	width : width
+        },
+        credits:{enabled:false},
+        title: {text: title},
+        xAxis: {
+            categories: xcolsarr
+        },
+        yAxis: {
+            title: {
+                text: ytitle
+            }
+        },
+        labels: {
+            items: [{
+                html: '',
+                style: {
+                    left: '50px',
+                    top: '18px',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                }
+            }]
+        },
+        series: [{
+            type: 'spline',
+            name: '新增',
+            data: adddata_arr,
+            marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                fillColor: 'blue'
+            }
+        },{
+            type: 'spline',
+            name: '流失',
+            data: removedata_arr,
+            marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                fillColor: 'white'
+            }
+        },{
+            type: 'area',
+            name: '净增',
+            data: reservedata_arr
+        }]
+    });
+}
+$(function () {
+	var height = "[!HEIGHT!]";
+	var width = "[!WIDTH!]";
+    var title = "[!TITLE!]";
+    var ytitle = "[!YTITLE!]";
+    var xcols = "[!NAME!]";
+    var adddata = "[!TOP!]";
+    var removedata = "[!BOTTOM!]";
+    var reservedata = "[!AREA!]";
+    drawChart(height,width,title,ytitle,xcols,adddata,removedata,reservedata);
+});
+</script>
+    </head>
+    <body>
+        <div id="chart"></div>
+    </body>
+</html>

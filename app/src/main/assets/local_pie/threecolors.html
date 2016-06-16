@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>1</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="jquery-1.11.0.min.js"></script>
+	<script src="highcharts.js"></script>
+<script type="text/javascript">
+function drawChart(height,width,title,ytitle,xcols,data1,data2,data3){
+    var xcolsarr = new Array();
+    var xcols_str = xcols.split(",");
+    for (var i=0;i<xcols_str.length;i++){
+        xcolsarr.push(xcols_str[i]);
+    }
+    var data1_arr = new Array();
+    var data1_str = data1.split(",");
+    for (var i=0;i<data1_str.length;i++){
+        data1_arr.push(parseFloat(data1_str[i]));
+    }
+    var data2_arr = new Array();
+    var data2_str = data2.split(",");
+    for (var i=0;i<data2_str.length;i++){
+        data2_arr.push(parseFloat(data2_str[i]));
+    }
+    var data3_arr = new Array();
+    var data3_str = data3.split(",");
+    for (var i=0;i<data3_str.length;i++){
+        data3_arr.push(parseFloat(data3_str[i]));
+    }
+    $('#chart').highcharts({
+        chart: {
+        	height : height,
+        	width : width,
+        	type: 'column'
+        },
+        colors: ['#db5937', '#95d004', '#4388ff'],
+        credits:{enabled:false},
+        title: {text: title},
+        xAxis: {
+            categories: xcolsarr
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: ytitle
+            },
+            stackLabels: {
+                enabled: true,
+                style: {
+                    fontWeight: 'bold',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'gray'
+                }
+            }
+        },
+        legend: {
+            align: 'right',
+            x: -70,
+            verticalAlign: 'top',
+            y: 20,
+            floating: true,
+            backgroundColor: (Highcharts.theme && Highcharts.theme.background2) || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            shadow: false
+        },
+        tooltip: {
+            formatter: function () {
+                return '<b>' + this.x + '</b><br/>' +
+                    this.series.name + ': ' + this.y + '<br/>' +
+                    '总数：' + this.point.stackTotal;
+            }
+        },
+        plotOptions: {
+             column: {
+                stacking: 'normal',
+                pointWidth:30,
+                dataLabels: {
+                    enabled: true,
+                    color: (Highcharts.theme && Highcharts.theme.dataLabelsColor) || 'white',
+                    style: {
+                        textShadow: '0 0 3px black, 0 0 3px black'
+                    },
+                    formatter:function(p){
+                    	if (this.y==0){
+                    		return '';
+                    	}else{
+                    		return this.y;
+                    	}
+                    }
+                },
+                showInLegend:true
+            }
+
+        },
+        series: [{
+            name: '停用',
+            data: data1_arr
+        }, {
+            name: '潜在',
+            data: data2_arr
+        }, {
+            name: '使用',
+            data: data3_arr
+        }]
+    });
+}
+$(function () {
+	var height = "[!HEIGHT!]";
+	var width = "[!WIDTH!]";
+    var title = "[!TITLE!]";
+    var ytitle = "[!YTITLE!]";
+    var xcols = "[!NAME!]";
+    var data1 = "[!RED!]";
+    var data2 = "[!GREEN!]";
+    var data3 = "[!BLUE!]";
+    drawChart(height,width,title,ytitle,xcols,data1,data2,data3);
+});
+</script>
+    </head>
+    <body>
+        <div id="chart"></div>
+    </body>
+</html>

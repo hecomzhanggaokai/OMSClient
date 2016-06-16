@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>JS交互测试页</title>
+
+
+    <script type="application/javascript" src="jsapi.js"></script>
+    <script type="application/javascript" src="android-v1.0.js"></script>
+
+    <!--  加载不同的jsapi实现,android或ios-->
+    <script src='' id="jsapi_implement"></script>
+    <script type="text/javascript">
+
+        function loadjs(jsfile) {
+            var oHead = document.getElementsByTagName('HEAD').item(0);
+            var oScript = document.createElement("script");
+            oScript.type = "text/javascript";
+            oScript.src = jsfile;
+            oHead.appendChild(oScript);
+        }
+
+
+        var u = navigator.userAgent, app = navigator.appVersion;
+        var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Linux') > -1; //android终端或者uc浏览器
+        var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+        if (isAndroid) {
+            loadjs("android-v1.0.js");
+        } else if (isiOS) {
+            loadjs("ios-v1.0.js");
+        } else {
+            //TODO 如果不是ISO或android
+        }
+
+
+
+        //页面完成后加载初始化jsapi
+        window.onload = function () {
+
+            jsapi.init();
+
+            var buttons = document.getElementsByTagName("button");
+            for (var i = 0; i < buttons.length; i++) {
+                var button = buttons[i];
+                var taskType = button.getAttribute("taskType");
+                if (taskType != undefined && taskType != null && taskType.length > 0) {
+                    button.onclick = function () {
+
+                        taskType = this.getAttribute("taskType");
+                        var taskArgs = this.getAttribute("taskArgs");
+                        if (taskArgs == undefined || taskArgs == null) taskArgs = "";
+
+                        if(taskType=="biz.navigation.setRight"){
+                            jsapi.callApp(taskType, taskArgs, function(result){console.log("顶部右侧按钮点击,result="+JSON.stringify(result))});
+                        }else if(taskType=="biz.navigation.setLeft" ){
+                            jsapi.callApp(taskType, taskArgs, function(){console.log("顶部左侧按钮点击")});
+                        }
+                        else{
+                            jsapi.callApp(taskType, taskArgs,  console.log);
+                        }
+
+                    };
+                }
+            }
+        }
+    </script>
+
+</head>
+<body>
+
+<div class="page-header">
+    <h1>JS API</h1>
+</div>
+
+
+<hr/>
+
+<span><button taskType="biz.util.adjustWebviewHeight" taskArgs='{"height":"200"}'>调整WEBVIEW大小</button></span>
+
+<p>顶部</p>
+<span><button taskType="biz.navigation.setRight" taskArgs='{"type":"text","value":["居然","两个"]}'>头部右侧按钮点击事件</button></span>
+<span><button taskType="biz.navigation.setRight" taskArgs='{"type":"text","value":[]}'>头部右侧按钮清除</button></span>
+
+<span><button taskType="biz.navigation.setLeft" taskArgs='{text:"红圈"}'>头部左侧按钮点击事件</button></span>
+<span><button taskType="biz.navigation.setLeft" taskArgs='{text:""}'>头部左侧按钮清除</button></span>
+
+<br />
+<span><button taskType="biz.navigation.set"  taskArgs='{visible:true}'>显示整条</button> </span>
+<span><button taskType="biz.navigation.set"  taskArgs='{visible:false}'>隐藏整条</button> </span>
+<br />
+<span><button taskType="biz.navigation.setTitle"  taskArgs='{text:"中间标题!!"}'>设置顶部标题</button> </span>
+<hr />
+
+<p>设备相关</p>
+<span><button taskType="device.notification.vibrate" taskArgs='{duration:200}'>震动</button></span>
+<hr />
+
+<p>版本相关</p>
+<span><button taskType="runtime.info">APP JSAPI版本</button> </span>
+<hr />
+
+<p>地图相关</p>
+<button taskType="biz.map.locate">获取地址位置</button>
+<br/>
+<hr/>
+
+<p>日期相关</p>
+<span> <button taskType="biz.util.datepicker" taskArgs='{format: "yyyy-MM-dd", value: ""}'> 日期选择器 </button></span>
+<span> <button taskType="biz.util.timepicker" taskArgs='{format: "HH:mm", value: ""}'> 时间选择器 </button></span>
+<span> <button taskType="biz.util.datetimepicker" taskArgs='{format: "yyyy-MM-dd HH:mm", value: ""}'> 日期时间选择器 </button></span>
+<span> <button taskType="biz.util.durationpicker" taskArgs='{}'> 时长选择器 </button></span>
+<hr />
+
+<p>打开本地页面</p>
+<span><button taskType="biz.util.open" taskArgs='{"name":"profile:points"}'>个人中心-积分任务</button></span>
+<span><button taskType="biz.util.open" taskArgs='{"name":"profile:invite"}'>个人中心-邀请朋友体验</button></span>
+<span><button taskType="biz.util.open" taskArgs='{"name":"im:chat","params":{"deviceId":"18611297950","nickname":"李鹏飞"}}'>内部沟通</button></span>
+<span><button taskType="biz.util.open" taskArgs='{"name":"customer:detail","params":{"customerCode":"61042096"}}'>客户详情</button></span>
+<span><button taskType="biz.util.open" taskArgs='{"name":"im:personDetail","params":{"deviceId":"18611297950"}}'>人员详情</button></span>
+<span><button taskType="biz.util.open" taskArgs='{"name":"employee:add","params":{"deviceId":"18611297950"}}'>邀请同事</button></span>
+<br/>
+<hr/>
+
+<p>杂项</p>
+<span><button taskType="device.notification.toast" taskArgs='{"text":"hello"}'>TOAST</button></span>
+<span><button taskType="biz.util.share" taskArgs='{"url": "http://www.baidu.com/","title": "各种鸡汤", image: "https://www.baidu.com/img/bd_logo1.png", "content": "鸡汤好喝不伤胃"}'>分享</button></span>
+<span><button taskType="internal.account.getId">帐户信息</button></span>
+<span><a href="tel:4008111111">电话拔打:顺丰</a> </span>
+<br/>
+<hr/>
+
+<p>用户行为日志</p>
+<span><button taskType="biz.util.usertrack" taskArgs='{
+    method: "PS",
+    arguments: {
+        target:"创建报表页"
+    }
+}'>进入页</button></span>
+
+<span><button taskType="biz.util.usertrack" taskArgs='{
+    "method": "LS",
+    "arguments": {
+        "target": "报表列表",
+        "row": "1"
+    }
+}'>列表选择项</button></span>
+
+
+<hr />
+
+<p>对话框</p>
+<span> <button taskType="device.notification.alert" taskArgs='{message:"内容",title:"标题",buttonName:"走你"}'>ALERT</button> </span>
+<span> <button taskType="device.notification.confirm" taskArgs='{ message: "内容", title: "标题", buttonLabels: ["起床", "取消"]}'>CONFIRM
+</button>  </span>
+<span><button taskType="device.notification.prompt" taskArgs='{ message: "内容", title: "标题", buttonLabels: ["确定", "取消"]}'>PROMPT</button>   </span>
+<span> <button taskType="device.notification.actionSheet" taskArgs='{ title: "标题", cancelButton: "取消", otherButtons: ["按钮1", "按钮2", "按钮3"]}'>ACTION_SHEET</button>  </span>
+<br/>
+<span><button taskType="device.notification.modal" taskArgs='{ title:"标题", content:"欢迎使用红圈", image:"https://www.baidu.com/img/bd_logo1.png", buttonLabels: ["确定"]}'>MODEL</button></span>
+
+<hr/>
+
+<p>加载</p>
+<span> <button taskType="device.notification.showPreloader" taskArgs='{text:"正在加载...",showIcon:false}'>加载对话框(别按，不会停)</button> </span>
+<span> <button taskType="device.notification.hidePreloader">关闭加载对话框</button> </span>
+<hr />
+
+<p>拍照上传</p>
+<span><button taskType="biz.util.uploadImageFromCamera">仅现场拍照</button></span>
+<span><button taskType="biz.util.uploadImageFromGallery">仅从相册选择</button></span>
+<span><button taskType="biz.util.uploadImage">拍照上传可选择</button></span>
+<hr />
+
+<p>窗口相关</p>
+<span><button taskType="biz.util.openLink" taskArgs='{url:"http://www.baidu.com/"}'>OPEN_LINK</button> </span>
+<span><button taskType="biz.navigation.close">关闭窗口</button></span>
+<hr />
+
+<p>非离线</p>
+<span><button taskType="online.text" taskArgs='{url:"",functionType:"",jsonObj:"{}"}'>上传文本</button> </span>
+<hr />
+
+
+<p>离线相关</p>
+<span><button taskType="offline.text" taskArgs='{url:"",functionType:"",jsonObj:"{}"}'>离线上传文本</button> </span>
+<span><button taskType="offline.image" taskArgs='{customerCode:"",imagePath:"",category:""}'>离线上传图片</button> </span>
+<hr />
+
+<p>业务相关</p>
+<span><button taskType="commercial.select" taskArgs='{type:"customer|product|etc",muti:1}'>选择业务对象</button> </span>
+<span><button taskType="commercial.list" taskArgs='{type:"customer|product|etc"}'>获取业务列表数据</button> </span>
+<span><button taskType="internal.data.call" taskArgs='{
+    method: "getProductList",
+    arguments: {
+        pageNum: 1,
+        pageSize: 10,
+        searchKey: "",
+        productCode: ""
+    }
+}'>本地数据</button> </span>
+
+<span><button taskType="biz.contact.choose" taskArgs='{multiple:true,title:"选择联系人AA"}'>选择联系人AA</button> </span>
+
+<hr />
+
+<p>模板相关</p>
+<p>拍照上传</p>
+<span><button taskType="biz.util.selectLocalFile"  taskArgs='{"fileType":"image","source":["camera","gallery"],"mutilple":"0"}' >选择本地图片二种方式</button></span>
+<span><button taskType="biz.util.selectLocalFile"  taskArgs='{"fileType":"image","source":["camera"],"mutilple":"0"}' >选择本地图片仅拍照</button></span>
+<hr />
+
+<p>离线相关</p>
+<span><button taskType="biz.data.notifyChange"  taskArgs='{"type":"log","data":{"action":"update","items":[{"templateId":"123","templateName":"notfiychange_add_template","templateType":"log"}]}}' >notifyChange</button></span>
+<span><button taskType="biz.data.notifyChange"  taskArgs='{"type":"template","data":{"action":"add","items":[{"templateId":"123","detailId":"1234","templateType":"log"}]}}' >notifyChange_TEMPLATE</button></span>
+<span><button taskType="biz.template.saveDetail"  taskArgs='{"submit":"0","draftId":"","templateType":"log","localFiles":[],"data":{"templateId":"123","detailId":"","templateType":"log"}}' >saveDetail</button></span>
+<hr />
+
+<p>其它</p>
+<span><button taskType="internal.account.getId">GETID</button></span>
+<span><button taskType="biz.template.getTemplate" taskArgs='{"templateType":"log","templateId":"20"}'>getTemplate</button></span>
+<span><button taskType="biz.template.getDetail" taskArgs='{"templateType":"log","detailId":"110"}'>getDetail</button></span>
+
+<span><button taskType="biz.template.getDetailIdOffset" taskArgs='{"templateType":"log","detailId":"80","offset":"1"}'>getNextDetailId</button></span>
+
+<span><button taskType="biz.enterprise.choose" taskArgs='{"empCodes":""}'>选择部门和人员</button></span>
+<span><button taskType="biz.util.shareCard" taskArgs='{"chatId":"aaaa","sender":"laotian","msgtype":"oa","oa":{"type":"log"}}'>卡片分享到群</button></span>
+<hr />
+<span><button taskType="biz.product.choose" taskArgs='{"productIDs":["1234"],"multiple":"0"}'>选择产品</button></span>
+<hr />
+<span><button taskType="biz.enterprise.dismiss" taskArgs='{}'>解散企业</button></span>
+<hr />
+<span><button taskType="biz.template.saveContact" taskArgs='{"templateType":"log","data":"123,456,678"}'> 保存模板审批／接收人</button></span>
+<hr />
+<span><button taskType="biz.template.getContact" taskArgs='{"templateType":"log"}'>获取模板审批／接收人</button></span>
+<hr />
+<span><button taskType="device.geolocation.get" taskArgs=''>地理位置</button></span>
+<hr />
+<span><button taskType="biz.util.previewImage" taskArgs='{ urls:["https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/global/img/icons_0e814c16.png","https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/home/img/icons_c3b33b92.png","https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/home/img/sugbg_6a9201c2.png"] , current:"https://ss1.bdstatic.com/5eN1bjq8AAUYm2zgoY3K/r/www/cache/static/protocol/https/global/img/icons_0e814c16.png" }'>图片浏览</button></span>
+<hr />
+<p>日志</p>
+<div id="logout" style="width:360px;word-break: break-all;"></div>
+<hr />
+
+<script type="text/javascript">
+
+
+    function onCallFromApp(str) {
+
+        var json = eval('(' + str + ')');
+        jsapi.onCallFromApp(json.taskId,json.taskType,json.args);
+    }
+
+
+    var outputDiv = document.getElementById('logout');
+    var console = window.console || {};
+    console.log = function() {
+        var i, output, newp;
+        output = '';
+        for (i in arguments) {
+            output = output + ', ' + JSON.stringify(arguments[i]);
+        }
+        newp = document.createElement('p');
+        newp.innerHTML = output;
+        outputDiv.appendChild(newp);
+    }
+    window.console = console;
+
+</script>
+
+</body>
+
+
+</html>

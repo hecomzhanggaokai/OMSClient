@@ -1,0 +1,91 @@
+{
+	"formatVersion": 1,
+
+	"_comment":	"The color in this file is in format ARGB.",
+	
+	"include": ["./map3_style_sheet.json"],
+
+	"class-DEFAULT": {
+		"map": {
+			"drawPolygons":	false,
+
+			"color": {
+				"roadOutline":	{
+					"minor":			"40999999",
+					"local":			"40999999",
+					"arterial":			"40999999",
+					"highway":			"40999999"
+				},
+				"lines": {
+					"minor":			"40f0f0f0",
+					"local":			"50fff8a4",
+					"arterial":			"60fedb3c",
+					"highway":			"70fac800",
+					"railway":			"60ffffff",
+					"subway":			"60ffffff",
+					"nationalBorder":	"709d9fa2",
+					"provinceBorder":	"70abaeb2",
+					"ferryLine":		"708591cc",
+					"water":			"6094bee5"
+				},
+
+				"fineBuilding":		"ffffffff",
+
+				"subwayOutline":	"c0ffffff",
+				"subways": ["c0C0C0C0", "c0E6002D", "c0B72F8C", "c0F6785D", "c0915833", "c0CD8426", "c0FA60A1", "c0671280", "c0865B8F", "c000908C", "c05DBD41", "c02D479A"],
+
+				"tmcs":	{
+					"unknown":	"ff888888",
+					"light":	"ff50bf39",
+					"medium":	"ffff9f19",
+					"heavy":	"ffe34949"
+				},
+
+				"labels": {
+					"default":				"ffffffff",
+					"parkLabel":			"ff84f370",
+					"townNameLabel":		"fff7edc1",
+					"overpassName":			"FFffFFff",
+					"overpassNameOutline":	"ff70925a",
+					"oceanName":			"ff0c4da2",
+					"continentName":		"ff93545c",
+					"countryName":			"FFffFFff",
+					"cityZoneLowLevel":		"ffffffff",
+					"subwayExitName":		"ffffffff",
+					"cityZoneHighLevel":	"ddffffff"
+				},
+				"roadNameOutlines":	{
+					"highway":	"ffffc144",
+					"arterial":	"ffffc144",
+					"local":	"ffe8e188",
+					"minor":	"ffffffff"
+				},
+				"roadName":		   "cc000000",
+				"erectRoadName":   "ff525252",
+				"highwayNumName":  "ffffffff",
+				"expressNumName":  "ffffffff"
+			},
+			
+			"lineWidth": {
+				"minor":	0.7,
+				"local":	0.8,
+				"arterial":	0.9,
+				"highway":	1.0,
+				"railway":	0.8,
+				"subway":	0.8,
+				"nationalBorder":	0.5,
+				"provinceBorder":	0.4,
+				"ferryLine"		:	0.5,
+				"water":	0.5
+			},
+			
+			"roadSideWidthFactors": {
+				"minor":	0.5,
+				"local":	0.5,
+				"arterial":	0.5,
+				"highway":	0.5
+			}
+		}
+	}
+	
+}

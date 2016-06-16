@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>4</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="jquery-1.11.0.min.js"></script>
+	<script src="highcharts.js"></script>
+<script type="text/javascript">
+function drawChart(height,width,title,xcols,columndata,linedata){
+    var xcolsarr = new Array();
+    var xcols_str = xcols.split(",");
+    for (var i=0;i<xcols_str.length;i++){
+        xcolsarr.push(xcols_str[i]);
+    }
+    var columndata_arr = new Array();
+    var columndata_str = columndata.split(",");
+    for (var i=0;i<columndata_str.length;i++){
+        columndata_arr.push(parseFloat(columndata_str[i]));
+    }
+    var linedata_arr = new Array();
+    var linedata_str = linedata.split(",");
+    for (var i=0;i<linedata_str.length;i++){
+        linedata_arr.push(parseFloat(linedata_str[i]));
+    }
+    $('#chart').highcharts({
+        chart: {
+        	height : height,
+        	width : width
+        },
+        credits:{enabled:false},
+        title: {text: title},
+        xAxis: {
+            categories: xcolsarr
+        },
+        labels: {
+            items: [{
+                html: '',
+                style: {
+                    left: '50px',
+                    top: '18px',
+                    color: (Highcharts.theme && Highcharts.theme.textColor) || 'black'
+                }
+            }]
+        },
+        plotOptions: {
+             column: {
+                stacking: 'normal',
+                pointWidth:30
+            }
+
+        },
+        series: [{
+            type: 'column',
+            name: '实际工作时长(人均)',
+            data: columndata_arr
+        }, {
+            type: 'spline',
+            name: '计划工作时长(人均)',
+            data: linedata_arr,
+            marker: {
+                lineWidth: 2,
+                lineColor: Highcharts.getOptions().colors[3],
+                fillColor: 'white'
+            }
+        }]
+    });
+}
+$(function () {
+	var height = "[!HEIGHT!]";
+	var width = "[!WIDTH!]";
+    var title = "[!HORIZONTAL_TILE!]";
+    var xcols = "[!NAME!]";
+    var columndata = "[!REALITY_NUM!]";
+    var linedata = "[!PLAN_NUM!]";
+    drawChart(height,width,title,xcols,columndata,linedata);
+});
+</script>
+    </head>
+    <body>
+        <div id="chart"></div>
+    </body>
+</html>

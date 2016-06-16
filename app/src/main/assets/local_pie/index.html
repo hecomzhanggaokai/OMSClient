@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>分析数据</title>
+
+<link href="bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+	<div class="container" style="width: 100%" >
+		<div class="row"  >
+			<div id="contract_value" class="col-sm-12" style="height:[!HEIGHT!]px;"></div>
+		</div>
+	</div>
+
+	<script src="jquery-1.11.0.min.js"></script>	
+	<script src="bootstrap.min.js"></script>
+	<script src="highcharts.js"></script>	
+	<script src="highcharts-3d.js"></script>
+	<script src="highcharts-more.js"></script>
+	<script>
+$(document).ready(function(){
+
+	
+/********************************************/
+
+    $('#contract_value').highcharts({
+        chart: {
+            type: 'pie',
+            options3d: {
+				enabled: true,
+                alpha: 45,
+                beta: 0
+            }
+        },
+        credits:{
+            enabled: false
+        },
+        title: {
+            text: '[!Title!]'
+        },
+        subtitle: {
+            text: '[!subTitle!]'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                showInLegend:true,
+                depth: 45,
+                dataLabels: {
+                    enabled: true,
+                    format: '{point.name}<br/>{point.y}家客户 ({point.percentage:.1f}%)'
+                },
+				point:{
+					events:{
+						click: function() { 
+							window.demo.startActivity(this.name);
+						}
+					} 
+				}
+            }
+        },
+        legend: {
+            enabled: true,
+            layout: 'vertical',
+            align: 'right',
+            verticalAlign: 'middle',
+            labelFormatter: function() {
+                return this.name + ' ' + this.y;
+            }
+        },
+        series: [{
+            type: 'pie',
+            name: '占比',
+            data: [[!Series!]
+            ]
+        }]
+    });
+    
+});
+
+</script>	
+
+</body>
+
+</html>
+

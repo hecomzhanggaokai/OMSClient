@@ -1,0 +1,48 @@
+<html>
+<head>
+<h1>
+This is a HTML Page
+</h1>
+<!-- JavaScript脚本，主要包括了按钮要执行的函数，显示对话框等 -->
+<script type="text/javascript">
+    //注意此处的TopLayoutFunction要和外部传入的名字一致，大小写正确
+    function myFunction()
+    {
+        alert("Hello");
+    }
+    function link(toast)
+    {
+        console.log("link method");//
+       	TopLayoutFunction.openLink(toast);
+    }
+    function actionSheet()
+    {
+        console.log("actionSheet method");
+        var link1 = "link('https://www.baidu.com')";
+        var link2 = "link('http://v30.sosgps.net.cn')";
+        var showItem = '{"title":"select","data":[{"name": "百度网址","function":"'+ link1 + '"},{"name": "红圈网址","function":"'+ link2 +'"}]}';
+      	TopLayoutFunction.actionSheet(showItem);
+    }
+    function updateRightMenu()
+    {
+        console.log("updateRightMenu method");
+        TopLayoutFunction.setRightTextView("{title:'菜单',showIcon:true,control:true,onSuccess:actionSheet(),onFail:''}");
+    }
+    //修改标题
+    function updateTitle(toast)
+    {
+        console.log("setTitleTextView method");
+        TopLayoutFunction.setTitleTextView(toast);
+    }
+</script>
+</head>
+<body>
+    
+    <p>
+        <button onclick="updateRightMenu()">设置菜单!</button><br /><br /> 
+        <input type="button" value="修改title" onclick="updateTitle('你好')" />
+    </p>
+ <a href="https://www.baidu.com" />Baidu
+    </a>
+</body>
+</html>

@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="new_comm_range_textview" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@drawable/top_textcolor_drawable</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLength">8</item>
+    </style>
+
+    <style name="new_comm_midd_textview" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">#333333</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLength">8</item>
+    </style>
+    <!-- 没有标题的dialog -->
+    <style name="DialogNoTitle" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/touming</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+    <!-- Dialog顶部标题的样式 -->
+    <style name="dialog_title" parent="@android:style/Widget.TextView">
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/main_red</item>
+        <item name="android:textSize">18dip</item>
+        <item name="android:padding">12dp</item>
+    </style>
+
+    <!-- Dialog底部按钮的样式 -->
+    <style name="dialog_bottom_button" parent="@android:style/Widget.Button">
+        <item name="android:background">@color/white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14dip</item>
+        <item name="android:padding">15dp</item>
+    </style>
+</resources>
