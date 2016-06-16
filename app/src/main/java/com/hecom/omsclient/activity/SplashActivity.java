@@ -5,6 +5,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.View;
 import android.widget.ImageView;
 
 import com.hecom.omsclient.Constants;
@@ -34,22 +35,14 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-//        try {
-//            Thread.sleep(5000);
-//        } catch (InterruptedException e) {
-//            e.printStackTrace();
-//        }
         image = (ImageView) findViewById(R.id.image);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                Intent intent = new Intent();
-                intent.setClass(SplashActivity.this, MainActivity.class);
-                startActivity(intent);
+                gotoHtmlWorld();
             }
         }, SPLASHLASTS);
-//        showSplashImg();
         checkSplashImg();
         startTarSyncServices();
         showSplashImg();
@@ -57,7 +50,6 @@ public class SplashActivity extends AppCompatActivity {
 
     private void checkSplashImg() {
         RequestParams params = new RequestParams();
-//        params.add("key","value");
         OMSClientApplication.getHttpClient().post("检查splashimg地址", params, new AsyncHttpResponseHandler() {
 
             @Override
@@ -80,12 +72,10 @@ public class SplashActivity extends AppCompatActivity {
                                     @Override
                                     public void success() {
                                         SharedPreferencesUtils.set(Constants.SPLASHURLKEY, remoteUrl);
-//                                        showSplashImg();
                                     }
 
                                     @Override
                                     public void failed() {
-//                                        showSplashImg();
                                     }
                                 });
                             }
@@ -100,43 +90,7 @@ public class SplashActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-//                for test
-//                final String remoteUrl = "http://img1.gtimg.com/news/pics/hv1/184/152/2084/135551044.jpg";
-//
-//                if (needDownLoad(remoteUrl)) {
-//                    OMSClientApplication.getHttpClient().get(remoteUrl, new FileAsyncHttpResponseHandler(SplashActivity.this) {
-//                        @Override
-//                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-////                            showSplashImg();
-//                        }
-//
-//                        @Override
-//                        public void onSuccess(int statusCode, Header[] headers, final File response) {
-//                            File file = PathUtils.getFileDirs();
-//                            if (file != null) {
-//                                File splashImgLocal = new File(file.getAbsolutePath() + File.separator + splashImgName);
-//                                Tools.moveFile(response, splashImgLocal, new Tools.moveFile() {
-//                                    @Override
-//                                    public void success() {
-//                                        SharedPreferencesUtils.set(Constants.SPLASHURLKEY, remoteUrl);
-////                                        showSplashImg();
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void failed() {
-////                                        showSplashImg();
-//                                    }
-//                                });
-//
-//                            }
-//                        }
-//                    });
-//                } else {
-//                    showSplashImg();
-//                }
-                //for test end
-//                showSplashImg();
+
             }
 
             @Override
@@ -197,5 +151,13 @@ public class SplashActivity extends AppCompatActivity {
         Intent intent = new Intent();
         intent.setClass(this, DownLoadTarService.class);
         startService(intent);
+    }
+
+    private void gotoHtmlWorld() {
+        Intent intent = new Intent();
+        intent.setClass(this, WebViewDemoActivity.class);
+        intent.putExtra("url", Constants.URL);
+        startActivity(intent);
+        finish();
     }
 }

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
@@ -28,17 +29,17 @@ public class WebViewDemoActivity extends FragmentActivity {
         webViewFragment = new WebViewFragment();
         Bundle bundle = new Bundle();
         Intent intent = getIntent();
-        if(intent != null){
-           String url = intent.getStringExtra("url");
-            if(!TextUtils.isEmpty(url)){
-                bundle.putString("url",url);
+        if (intent != null) {
+            String url = intent.getStringExtra("url");
+            if (!TextUtils.isEmpty(url)) {
+                bundle.putString("url", url);
             }
         }
         webViewFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.webViewContainer, webViewFragment).commit();
     }
 
-//    public void getUserInput(View view) {
+    //    public void getUserInput(View view) {
 //
 //        webViewFragment.getUserInput(new JSInteraction.OnResult() {
 //            @Override
@@ -52,6 +53,15 @@ public class WebViewDemoActivity extends FragmentActivity {
 //            }
 //        });
 //    }
-
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (webViewFragment != null) {
+            boolean processed = webViewFragment.onKeyDown(keyCode, event);
+            if (processed) {
+                return true;
+            }
+        }
+        return super.onKeyDown(keyCode, event);
+    }
 
 }

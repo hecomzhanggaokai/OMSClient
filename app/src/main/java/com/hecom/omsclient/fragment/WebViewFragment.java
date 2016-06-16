@@ -81,7 +81,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
     public static final String IS_FROM_WEBVIEW = "is_from_webview";
     public static final String FROM_WEBVIEW_ISMULTIPLE = "from_webview_is_multiple";
     private static final String DEFAULT_URL = "file:///android_asset/market/plugin.html";
-//private static final String DEFAULT_URL = "file:///android_asset/demo.html";
+    //private static final String DEFAULT_URL = "file:///android_asset/demo.html";
     private final static int ACTIVITY_REQUEST_LOCATION = 0x1;
     private final static int ACTIVITY_REQUEST_TAKE_PHOTO = 0x2;
     private final static int ACTIVITY_REQUEST_SELECT_IMAGE = 0x3;
@@ -116,7 +116,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
     private WebView webview;
 
     private String mUrl = DEFAULT_URL;
-    private boolean fullScreenMode = true;
+//    private boolean fullScreenMode = true;
     /**
      * 是否透明，以便显示后面的水印背景
      */
@@ -159,10 +159,10 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
      */
     public void changeWebViewHeight(int newHeight) {
         Log.d(TAG, "changeWebViewHeight =" + newHeight + ", scale=" + webview.getScale());
-        if (!fullScreenMode) {
-            int height = (int) (newHeight * webview.getScale());
-            webview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
-        }
+//        if (!fullScreenMode) {
+//            int height = (int) (newHeight * webview.getScale());
+//            webview.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, height));
+//        }
     }
 
 //    /**
@@ -1040,8 +1040,8 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         //View rootView=getView();
         top_bar = (RelativeLayout) rootView.findViewById(R.id.top_bar);
 
-        //全屏才显示导航条,内嵌不显示
-        top_bar.setVisibility(fullScreenMode ? View.VISIBLE : View.GONE);
+//        //全屏才显示导航条,内嵌不显示
+//        top_bar.setVisibility(fullScreenMode ? View.VISIBLE : View.GONE);
 
         tv_back = (TextView) rootView.findViewById(R.id.tv_back);
         tv_close = (TextView) rootView.findViewById(R.id.tv_close);
@@ -1468,7 +1468,11 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
 //        }
 //    }
     private void finish() {
-        if (fullScreenMode) {
+//        Intent intent = new Intent(Intent.ACTION_MAIN);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//        intent.addCategory(Intent.CATEGORY_HOME);
+//        startActivity(intent);
+        if (getActivity() != null) {
             getActivity().finish();
         }
     }
@@ -1489,13 +1493,11 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
 
     //    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
-        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 && fullScreenMode) { //按下的如果是BACK，同时没有重复
+        if (keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0) { //按下的如果是BACK，同时没有重复
             onBack();
-            return true;
         }
-        return false;
+        return true;
     }
-
 
 //    @Override
 //    public void onDestroy() {
