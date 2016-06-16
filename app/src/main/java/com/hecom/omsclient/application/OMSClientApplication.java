@@ -3,6 +3,8 @@ package com.hecom.omsclient.application;
 import android.app.Application;
 import android.os.Environment;
 
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.SyncHttpClient;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import com.nostra13.universalimageloader.core.DisplayImageOptions;
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -16,6 +18,8 @@ import java.io.File;
  */
 public class OMSClientApplication extends Application {
     private ImageLoader mImageLoader;
+    private static AsyncHttpClient client;
+    private static SyncHttpClient syncHttpClient;
 
     public ImageLoader getImageLoader() {
         if (mImageLoader == null) {
@@ -38,7 +42,7 @@ public class OMSClientApplication extends Application {
     private void initImageLoader() {
         mImageLoader = ImageLoader.getInstance();
 
-        File sdcardDir = Environment.getExternalStorageDirectory();
+//        File sdcardDir = Environment.getExternalStorageDirectory();
         //File sdcardCacheDir = new File(sdcardDir, "hecom/imageloader/Cache");
         ImageLoaderConfiguration config = new ImageLoaderConfiguration.Builder(this)
                 .threadPriority(Thread.NORM_PRIORITY - 2)/*.denyCacheImageMultipleSizesInMemory()*/
@@ -58,5 +62,22 @@ public class OMSClientApplication extends Application {
     public void onCreate() {
         super.onCreate();
         mInstance = this;
+    }
+
+    public static AsyncHttpClient getHttpClient() {
+
+        if (client == null) {
+            client = new AsyncHttpClient();
+            client.setMaxRetriesAndTimeout(0, 15000);
+        }
+        return client;
+    }
+
+    public static SyncHttpClient getSyncHttpClient() {
+        if (syncHttpClient == null) {
+            syncHttpClient = new SyncHttpClient();
+            syncHttpClient.setMaxRetriesAndTimeout(0, 15000);
+        }
+        return syncHttpClient;
     }
 }

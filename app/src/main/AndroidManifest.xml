@@ -45,31 +45,33 @@
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="@string/loc_key" />
+
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.SplashActivity"
             android:configChanges="orientation|keyboardHidden"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
-            android:name="com.hecom.omsclient.activity.WebViewDemoActivity"
+            android:name=".activity.MainActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"></activity>
+        <activity
+            android:name=".activity.WebViewDemoActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name="com.hecom.omsclient.activity.PhotoViewerActivity"
+            android:name=".activity.PhotoViewerActivity"
             android:screenOrientation="portrait" />
-
         <activity
-            android:name="com.hecom.omsclient.widget.AlertActivity"
+            android:name=".widget.AlertActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/DialogNoTitle" />
-
     </application>
 
 </manifest>

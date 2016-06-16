@@ -18,6 +18,17 @@ public class MainActivity extends AppCompatActivity {
     public void demo(View view) {
         Intent intent = new Intent();
         intent.setClass(this, WebViewDemoActivity.class);
+        intent.putExtra("url", "http://ptest.hecom.cn/omsmobile/jsapi/demo.html");
+        startActivity(intent);
+    }
+
+    //返回切换到桌面
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(Intent.ACTION_MAIN);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        intent.addCategory(Intent.CATEGORY_HOME);
+
         startActivity(intent);
     }
 }

@@ -29,6 +29,7 @@ import android.os.IBinder;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -60,6 +61,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -83,10 +85,77 @@ import java.util.regex.Pattern;
 //import cn.sharesdk.onekeyshare.OnekeyShareTheme;
 
 public class Tools {
-	public static final int STATE_UPDATE_NULL = 0;
-	public static final int STATE_UPDATE_TRUE = 1;
-	public static final int STATE_UPDATE_FALSE = 2;
-//
+    /**
+     * 返回当前程序版本名
+     */
+    public static String getAppVersionName(Context context) {
+        String versionName = "";
+        try {
+            // ---get the package info---
+            PackageManager pm = context.getPackageManager();
+            PackageInfo pi = pm.getPackageInfo(context.getPackageName(), 0);
+            versionName = pi.versionName;
+//            versioncode = pi.versionCode;
+            if (versionName == null || versionName.length() <= 0) {
+                return "";
+            }
+        } catch (Exception e) {
+            Log.e("VersionInfo", "Exception", e);
+        }
+        return versionName;
+    }
+
+
+    public static void moveFile(final File from, final File to, final moveFile listener) {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                FileInputStream fileInputStream = null;
+                FileOutputStream fileOutputStream = null;
+                try {
+                    fileInputStream = new FileInputStream(from);
+                    fileOutputStream = new FileOutputStream(to);
+                    byte[] tempbytes = new byte[1024];
+                    int byteread = 0;
+                    while ((byteread = fileInputStream.read(tempbytes)) != -1) {
+                        fileOutputStream.write(tempbytes, 0, byteread);
+                    }
+                    listener.success();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    listener.failed();
+                } finally {
+                    if (fileInputStream != null) {
+                        try {
+                            fileInputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    if (fileOutputStream != null) {
+                        try {
+                            fileOutputStream.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }
+        }).start();
+
+
+    }
+
+    public static interface moveFile {
+
+        void success();
+
+        void failed();
+
+    }
+
+    //
 //	/**
 //	 * 获取本地文件的md5值
 //	 *
@@ -376,10 +445,10 @@ public class Tools {
 //	 * @return
 //	 * @Description: Dip转Px
 //	 */
-	public static int dip2px(Context context, float dipValue) {
-		final float scale = context.getResources().getDisplayMetrics().density;
-		return (int) (dipValue * scale + 0.5f);
-	}
+    public static int dip2px(Context context, float dipValue) {
+        final float scale = context.getResources().getDisplayMetrics().density;
+        return (int) (dipValue * scale + 0.5f);
+    }
 //
 //	/**
 //	 * 获取照片旋转度数
