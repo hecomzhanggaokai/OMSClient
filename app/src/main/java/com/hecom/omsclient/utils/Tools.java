@@ -34,6 +34,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.webkit.MimeTypeMap;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -52,6 +53,8 @@ import android.widget.Toast;
 //import com.hecom.util.json.JSONException;
 //import com.hecom.util.json.JSONObject;
 //import com.tencent.bugly.crashreport.CrashReport;
+
+import com.hecom.omsclient.application.OMSClientApplication;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayInputStream;
@@ -153,6 +156,75 @@ public class Tools {
 
         void failed();
 
+    }
+
+    /**
+     * 获得保存图片的文件夹路径
+     * <p>
+     * 根据不用业务，使用pictmp/folderType/指定的照片存储路径。如果为空，则使用默认的pictmp/路径
+     * </p>
+     * 建议在启动CamerActivity的时候，传入"typeFileFolder"参数,来制定不同业务，使用不同的图片文件夹
+     *
+     * @param folderType 不同的业务文件夹路径
+     * @return
+     */
+    public static String getPicSaveDir(String folderType) {
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(getSdRootPath());
+        stringBuilder.append("/");
+        stringBuilder.append("pictmp/");
+        if (!TextUtils.isEmpty(folderType)) {
+            stringBuilder.append(folderType);
+            stringBuilder.append("/");
+        }
+        String fileDir = stringBuilder.toString();
+        File filePth = new File(fileDir);
+        if (!filePth.exists()) {
+            filePth.mkdirs();
+        }
+        return fileDir;
+    }
+
+    /**
+     * 取SD卡路径，不带最后分隔符的; 如没有sd卡，返回data/data/files路径; 如有异常，返回空
+     *
+     * @return
+     */
+    public static String getSdRootPath() {
+        File sdDir = null;
+        try {
+            boolean sdCardExist = Environment.getExternalStorageState().equals(
+                    android.os.Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
+            if (sdCardExist) {
+                sdDir = Environment.getExternalStorageDirectory(); // 获取根目录
+            } else {
+                sdDir = OMSClientApplication.getInstance().getFilesDir();
+            }
+            if (sdDir != null) {
+                return sdDir.getPath();
+            } else {
+                return "";
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+
+    public static String getMIMEType(File var0) {
+        String var1 = "";
+        String var2 = var0.getName();
+        String var3 = var2.substring(var2.lastIndexOf(".") + 1, var2.length()).toLowerCase();
+        var1 = MimeTypeMap.getSingleton().getMimeTypeFromExtension(var3);
+        return var1;
+    }
+
+    public static String getMIMEType(String var0) {
+        String var1 = "";
+        String var2 = var0.substring(var0.lastIndexOf(".") + 1, var0.length()).toLowerCase();
+        var1 = MimeTypeMap.getSingleton().getMimeTypeFromExtension(var2);
+        return var1;
     }
 
     //

@@ -4,10 +4,12 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.hecom.log.HLog;
 import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.application.OMSClientApplication;
 import com.hecom.omsclient.utils.PathUtils;
 import com.hecom.omsclient.utils.SharedPreferencesUtils;
+import com.hecom.omsclient.utils.Tools;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
@@ -20,7 +22,6 @@ import cz.msebera.android.httpclient.Header;
  * Created by zhanggaokai on 16/6/16.
  */
 public class DownLoadTarService extends IntentService {
-    private static String TARNAME = "clienthttp.tar";
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -44,18 +45,28 @@ public class DownLoadTarService extends IntentService {
                 //判断是否需要下载
                 String remoteUrl = "";
                 if (needDownLoad(remoteUrl)) {
-                    OMSClientApplication.getHttpClient().get(remoteUrl, new FileAsyncHttpResponseHandler(DownLoadTarService.this) {
+                    OMSClientApplication.getSyncHttpClient().get(remoteUrl, new FileAsyncHttpResponseHandler(DownLoadTarService.this) {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-
+                            HLog.e("DownLoadTarService", "更新tar包失败,网络原因");
                         }
 
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, File response) {
                             File file = PathUtils.getFileDirs();
                             if (file != null) {
-                                File tarLocalFile = new File(file.getAbsolutePath() + File.separator + TARNAME);
-                                response.renameTo(tarLocalFile);
+                                File tarLocalFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
+                                Tools.moveFile(response, tarLocalFile, new Tools.moveFile() {
+                                    @Override
+                                    public void success() {
+                                        HLog.i("DownLoadTarService", "更新tar包成功");
+                                    }
+
+                                    @Override
+                                    public void failed() {
+                                        HLog.e("DownLoadTarService", "更新tar包失败,已经成功下载,复制的时候出错");
+                                    }
+                                });
                             }
                         }
                     });
@@ -98,7 +109,7 @@ public class DownLoadTarService extends IntentService {
         if (file == null) {
             return false;
         }
-        File splashFile = new File(file.getAbsolutePath() + File.separator + TARNAME);
+        File splashFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
         return splashFile.exists();
     }
 }

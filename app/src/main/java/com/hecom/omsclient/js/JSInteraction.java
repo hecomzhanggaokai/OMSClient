@@ -521,8 +521,5 @@ public class JSInteraction {
             }
             mCallFromAppListeners.remove(taskType);
         }
-
     }
-
-
 }

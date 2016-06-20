@@ -48,7 +48,10 @@ import com.hecom.omsclient.js.entity.ParamCreateChat;
 import com.hecom.omsclient.js.entity.ParamOpenLink;
 import com.hecom.omsclient.js.entity.ParamPreviewImage;
 import com.hecom.omsclient.js.entity.ParamSetRight;
+import com.hecom.omsclient.js.entity.ParamSetTitle;
 import com.hecom.omsclient.js.entity.ParamText;
+import com.hecom.omsclient.utils.Tools;
+import com.hecom.omsclient.utils.tar.TarCache;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -190,6 +193,8 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
             hideTopRightButtons();
             setRegister(values.length > 0);
 
+            Log.e("here", "1");
+
             if (type.equalsIgnoreCase(ParamSetRight.TYPE_ICON)) {
                 //TODO 设置左侧图标
                 if (values.length > 0) {
@@ -210,7 +215,6 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
                 }
             }
         }
-
     };
 
     private JSInteraction.JSListener setLeftListener = new JSInteraction.JSListener<ParamText>() {
@@ -397,38 +401,14 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         }
     };
 
-    /**
-     * 取SD卡路径，不带最后分隔符的; 如没有sd卡，返回data/data/files路径; 如有异常，返回空
-     *
-     * @return
-     */
-    public static String getSdRootPath() {
-        File sdDir = null;
-        try {
-            boolean sdCardExist = Environment.getExternalStorageState().equals(
-                    android.os.Environment.MEDIA_MOUNTED); // 判断sd卡是否存在
-            if (sdCardExist) {
-                sdDir = Environment.getExternalStorageDirectory(); // 获取根目录
-            } else {
-                sdDir = OMSClientApplication.getInstance().getFilesDir();
-            }
-            if (sdDir != null) {
-                return sdDir.getPath();
-            } else {
-                return "";
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
+
 
 
     private String getLocalPath(String remoteUrl) {
 
         String app_preview_url = "http://app/imagePreview?filePath=";
         if (remoteUrl.startsWith(app_preview_url) && remoteUrl.length() > app_preview_url.length()) {
-            String picTmpDir = getPicSaveDir("");
+            String picTmpDir = Tools.getPicSaveDir("");
             String imageFileName = remoteUrl.substring(app_preview_url.length());
             try {
                 imageFileName = URLDecoder.decode(imageFileName, "UTF-8");
@@ -444,32 +424,6 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
     }
 
 
-    /**
-     * 获得保存图片的文件夹路径
-     * <p>
-     * 根据不用业务，使用pictmp/folderType/指定的照片存储路径。如果为空，则使用默认的pictmp/路径
-     * </p>
-     * 建议在启动CamerActivity的时候，传入"typeFileFolder"参数,来制定不同业务，使用不同的图片文件夹
-     *
-     * @param folderType 不同的业务文件夹路径
-     * @return
-     */
-    public static String getPicSaveDir(String folderType) {
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append(getSdRootPath());
-        stringBuilder.append("/");
-        stringBuilder.append("pictmp/");
-        if (!TextUtils.isEmpty(folderType)) {
-            stringBuilder.append(folderType);
-            stringBuilder.append("/");
-        }
-        String fileDir = stringBuilder.toString();
-        File filePth = new File(fileDir);
-        if (!filePth.exists()) {
-            filePth.mkdirs();
-        }
-        return fileDir;
-    }
 
     private void bindTaskResolvers() {
         jsInteraction = new JSInteraction();
@@ -485,13 +439,13 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
 
             @Override
             public WebResourceResponse shouldInterceptRequest(WebView view, String url) {
-//                WebResourceResponse response = PluginManager.getInstance().getCache(url);
-//                // Log.d(TAG,"shouldInterceptRequest,url="+url+", intercept="+(response!=null));
-//                if (response != null) {
-//                    return response;
-//                } else {
+                WebResourceResponse response = TarCache.getCache(url);
+                // Log.d(TAG,"shouldInterceptRequest,url="+url+", intercept="+(response!=null));
+                if (response != null) {
+                    return response;
+                } else {
                 return super.shouldInterceptRequest(view, url);
-//                }
+                }
             }
 
             @Override
@@ -661,10 +615,10 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         jsInteraction.addJsResolver(JSTaskTypes.TOP_TITLE, new JSResolverFactory() {
             @Override
             public JSInteraction.JsResolver create(int taskId) {
-                return new JSInteraction.JsResolver<ParamText>(true) {
+                return new JSInteraction.JsResolver<ParamSetTitle>(true) {
                     @Override
-                    protected JSONObject onJsCall(ParamText args) {
-                        tv_title.setText(args.getText());
+                    protected JSONObject onJsCall(ParamSetTitle args) {
+                        tv_title.setText(args.getTitle());
                         return null;
                     }
                 };

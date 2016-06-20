@@ -1,11 +1,15 @@
 package com.hecom.omsclient.activity;
 
+import android.animation.ObjectAnimator;
+import android.animation.TimeInterpolator;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
 import com.hecom.omsclient.Constants;
@@ -28,7 +32,6 @@ import cz.msebera.android.httpclient.Header;
 
 public class SplashActivity extends AppCompatActivity {
     private static final long SPLASHLASTS = 3000;
-    private String splashImgName = "splashimg.png";
     private ImageView image;
 
     @Override
@@ -46,6 +49,7 @@ public class SplashActivity extends AppCompatActivity {
         checkSplashImg();
         startTarSyncServices();
         showSplashImg();
+        animatorAlph();
     }
 
     private void checkSplashImg() {
@@ -67,7 +71,7 @@ public class SplashActivity extends AppCompatActivity {
                         public void onSuccess(int statusCode, Header[] headers, File response) {
                             File file = PathUtils.getFileDirs();
                             if (file != null) {
-                                File splashImgLocal = new File(file.getAbsolutePath() + File.separator + splashImgName);
+                                File splashImgLocal = new File(file.getAbsolutePath() + File.separator + Constants.SPLASHIMGNAME);
                                 Tools.moveFile(response, splashImgLocal, new Tools.moveFile() {
                                     @Override
                                     public void success() {
@@ -81,9 +85,9 @@ public class SplashActivity extends AppCompatActivity {
                             }
                         }
                     });
-                } else {
+                }/* else {
                     showSplashImg();
-                }
+                }*/
 
 
             }
@@ -93,12 +97,6 @@ public class SplashActivity extends AppCompatActivity {
 
             }
 
-            @Override
-            public void onProgress(long bytesWritten, long totalSize) {
-
-
-                super.onProgress(bytesWritten, totalSize);
-            }
         });
 
 
@@ -114,12 +112,12 @@ public class SplashActivity extends AppCompatActivity {
         if (file == null) {
             return false;
         }
-        File splashFile = new File(file.getAbsolutePath() + File.separator + splashImgName);
+        File splashFile = new File(file.getAbsolutePath() + File.separator + Constants.SPLASHIMGNAME);
         return splashFile.exists();
     }
 
     private boolean needDownLoad(String remoteSplashUrl) {
-
+        //存储空间都没有,当然不用再去下载了......
         File file = PathUtils.getFileDirs();
         if (file == null) {
             return false;
@@ -130,19 +128,16 @@ public class SplashActivity extends AppCompatActivity {
         }
 
         String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
-        if (remoteSplashUrl.equals(localSplashImgUrl)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !(remoteSplashUrl.equals(localSplashImgUrl));
     }
 
     private void showSplashImg() {
         if (isSplashImgExists()) {
-            File splashFile = new File(PathUtils.getFileDirs() + File.separator + splashImgName);
+            File splashFile = new File(PathUtils.getFileDirs() + File.separator + Constants.SPLASHIMGNAME);
             OMSClientApplication.getInstance().getImageLoader().displayImage("file://" + splashFile.getAbsolutePath(), image);
         } else {
-            OMSClientApplication.getInstance().getImageLoader().displayImage("drawable://" + R.drawable.defaultimg, image);
+//            OMSClientApplication.getInstance().getImageLoader().displayImage("drawable://" + R.drawable.wel4_iphone, image);
+            image.setImageResource(R.drawable.default_splash);
         }
     }
 
@@ -159,5 +154,12 @@ public class SplashActivity extends AppCompatActivity {
         intent.putExtra("url", Constants.URL);
         startActivity(intent);
         finish();
+    }
+
+    private void animatorAlph() {
+        ObjectAnimator animator = ObjectAnimator.ofFloat(findViewById(R.id.layout), "alpha", 0.6f, 1f);
+        animator.setDuration(400);
+        animator.setInterpolator(new DecelerateInterpolator());
+        animator.start();
     }
 }
