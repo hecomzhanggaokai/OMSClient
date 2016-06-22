@@ -9,11 +9,26 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
+import com.hecom.log.HLog;
+import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.R;
+import com.hecom.omsclient.application.OMSClientApplication;
+import com.hecom.omsclient.entity.UpdateInfoEntity;
 import com.hecom.omsclient.fragment.WebViewFragment;
 import com.hecom.omsclient.js.JSInteraction;
+import com.hecom.omsclient.utils.PathUtils;
+import com.hecom.omsclient.utils.SharedPreferencesUtils;
+import com.hecom.omsclient.utils.Tools;
+import com.loopj.android.http.BaseJsonHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.w3c.dom.Text;
+
+import java.io.File;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * Created by tianlupan on 16/4/19.
@@ -40,6 +55,10 @@ public class WebViewDemoActivity extends FragmentActivity {
         }
         webViewFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.webViewContainer, webViewFragment).commit();
+        //免的app被强杀之后再次提示更新
+        if (savedInstanceState == null) {
+            checkApkVersion();
+        }
     }
 
     //    public void getUserInput(View view) {
@@ -67,4 +86,42 @@ public class WebViewDemoActivity extends FragmentActivity {
         return super.onKeyDown(keyCode, event);
     }
 
+
+    private void checkApkVersion() {
+        RequestParams params = new RequestParams();
+        OMSClientApplication.getHttpClient().post(Constants.CHECKURL, params, new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, final UpdateInfoEntity response) {
+                if (!response.isSuccess()) {
+                    HLog.e("WebViewDemoActivity", "数据请返回错误");
+                    return;
+                }
+                if (response.getData().isAPkNeedUpdate()) {
+                    popUpdateActivity(response.getData().getAndroid_apk_dlurl());
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, UpdateInfoEntity errorResponse) {
+                HLog.e("WebViewDemoActivity", "数据请求发生错误");
+            }
+
+            @Override
+            protected UpdateInfoEntity parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                if (rawJsonData == null) {
+                    return null;
+                }
+                Gson gson = new Gson();
+                return gson.fromJson(rawJsonData, UpdateInfoEntity.class);
+            }
+        });
+    }
+
+    private void popUpdateActivity(String apkurl) {
+        Intent intent = new Intent();
+        intent.putExtra("url",apkurl);
+        intent.setClass(this, UpdateActivity.class);
+        startActivity(intent);
+
+    }
 }

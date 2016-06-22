@@ -114,7 +114,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
     private TextView tv_close;
     private TextView tv_title;
     private ImageView icon_right1, icon_right2;
-    private TextView tv_right1, tv_right2;
+    private TextView tv_right1, tv_right2, right_text;
     private ProgressBar pb_loading;
     private WebView webview;
 
@@ -184,36 +184,46 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         tv_right2.setVisibility(View.GONE);
     }
 
-    private JSInteraction.JSListener setRightListener = new JSInteraction.JSListener<ParamSetRight>() {
+    private JSInteraction.JSListener setRightListener = new JSInteraction.JSListener<ParamText>() {
 
         @Override
-        protected void onJsCall(ParamSetRight args) {
-            String[] values = args.getValue();
-            String type = args.getType();
-            hideTopRightButtons();
-            setRegister(values.length > 0);
+        protected void onJsCall(ParamText args) {
 
-            Log.e("here", "1");
-
-            if (type.equalsIgnoreCase(ParamSetRight.TYPE_ICON)) {
-                //TODO 设置左侧图标
-                if (values.length > 0) {
-                    icon_right1.setVisibility(View.VISIBLE);
-                }
-                //TODO 设置右侧图标
-                if (values.length > 1) {
-                    icon_right2.setVisibility(View.VISIBLE);
-                }
-            } else if (type.equalsIgnoreCase(ParamSetRight.TYPE_TEXT)) {
-                if (values.length > 0) {
-                    tv_right1.setVisibility(View.VISIBLE);
-                    tv_right1.setText(values[0]);
-                }
-                if (values.length > 1) {
-                    tv_right2.setVisibility(View.VISIBLE);
-                    tv_right2.setText(values[1]);
-                }
+            String text = args.getText();
+            if (TextUtils.isEmpty(text)) {
+                tv_back.setText("");
+                setRegister(false);
+            } else {
+                tv_back.setText(text);
+                setRegister(true);
             }
+
+//            String[] values = args.getValue();
+//            String type = args.getType();
+//            hideTopRightButtons();
+//            setRegister(values.length > 0);
+//
+//            Log.e("here", "1");
+//
+//            if (type.equalsIgnoreCase(ParamSetRight.TYPE_ICON)) {
+//                //TODO 设置左侧图标
+//                if (values.length > 0) {
+//                    icon_right1.setVisibility(View.VISIBLE);
+//                }
+//                //TODO 设置右侧图标
+//                if (values.length > 1) {
+//                    icon_right2.setVisibility(View.VISIBLE);
+//                }
+//            } else if (type.equalsIgnoreCase(ParamSetRight.TYPE_TEXT)) {
+//                if (values.length > 0) {
+//                    tv_right1.setVisibility(View.VISIBLE);
+//                    tv_right1.setText(values[0]);
+//                }
+//                if (values.length > 1) {
+//                    tv_right2.setVisibility(View.VISIBLE);
+//                    tv_right2.setText(values[1]);
+//                }
+//            }
         }
     };
 
@@ -402,8 +412,6 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
     };
 
 
-
-
     private String getLocalPath(String remoteUrl) {
 
         String app_preview_url = "http://app/imagePreview?filePath=";
@@ -422,7 +430,6 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         }
         return remoteUrl;
     }
-
 
 
     private void bindTaskResolvers() {
@@ -444,7 +451,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
                 if (response != null) {
                     return response;
                 } else {
-                return super.shouldInterceptRequest(view, url);
+                    return super.shouldInterceptRequest(view, url);
                 }
             }
 
@@ -1002,6 +1009,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         tv_title = (TextView) rootView.findViewById(R.id.tv_title);
         tv_right1 = (TextView) rootView.findViewById(R.id.tv_right1);
         tv_right2 = (TextView) rootView.findViewById(R.id.tv_right2);
+        right_text = (TextView) rootView.findViewById(R.id.right_text);
         icon_right1 = (ImageView) rootView.findViewById(R.id.icon_right1);
         icon_right2 = (ImageView) rootView.findViewById(R.id.icon_right2);
         webview = (WebView) rootView.findViewById(R.id.webview);
@@ -1445,17 +1453,19 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
     }
 
     private void onBack() {
-        if (setLeftListener != null && setLeftListener.isRegister()) {
-            setLeftListener.onClick();
-        } else if (webview != null) {
-            if (webview.canGoBack()) {
-                webview.goBack();
-            } else {
-                finish();
-            }
-        } else {
-            finish();
-        }
+
+        jsInteraction.callOnJSListener("backbutton", webview.canGoBack());
+//        if (setLeftListener != null && setLeftListener.isRegister()) {
+//            setLeftListener.onClick();
+//        } else if (webview != null) {
+//            if (webview.canGoBack()) {
+//                webview.goBack();
+//            } else {
+//                finish();
+//            }
+//        } else {
+//            finish();
+//        }
     }
 
     //    @Override
@@ -1488,6 +1498,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
                 break;
             case R.id.tv_right1:
             case R.id.icon_right1:
+            case R.id.right_text:
 //                UserTrack.click("qd");
                 setRightListener.onClick(0);
                 break;
@@ -1503,4 +1514,19 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (jsInteraction != null) {
+            jsInteraction.callOnJSListener("resume", null);
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (jsInteraction != null) {
+            jsInteraction.callOnJSListener("pause", null);
+        }
+    }
 }

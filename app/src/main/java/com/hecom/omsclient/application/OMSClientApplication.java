@@ -70,7 +70,7 @@ public class OMSClientApplication extends Application {
     public static SyncHttpClient getSyncHttpClient() {
         if (syncHttpClient == null) {
             syncHttpClient = new SyncHttpClient();
-            syncHttpClient.setMaxRetriesAndTimeout(0, 15000);
+            syncHttpClient.setMaxRetriesAndTimeout(0, 120000);
         }
         return syncHttpClient;
     }

@@ -24,10 +24,24 @@ public class PathUtils {
     }
 
     public static File getFileDirs() {
-        File[] file = ContextCompat.getExternalFilesDirs(OMSClientApplication.getInstance(), null);
-        if (file.length > 0) {
-            return file[0];
+
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+
+            File result = new File(Environment.getExternalStorageDirectory(),
+                    "hecomomsclient/" + "files");
+            if (!result.exists()) {
+                result.mkdirs();
+            }
+
+//            File[] file = ContextCompat.getExternalFilesDirs(OMSClientApplication.getInstance(), null);
+//            if (file.length > 0) {
+//                return file[0];
+//            }
+            return result;
+        } else {
+            return OMSClientApplication.getInstance().getFilesDir();
         }
-        return null;
+//        return null;
+
     }
 }

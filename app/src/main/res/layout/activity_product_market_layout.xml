@@ -89,6 +89,15 @@
                 android:text="行业筛选"
                 android:visibility="gone" />
 
+            <TextView
+                android:id="@+id/right_text"
+                style="@style/new_comm_range_textview"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:paddingRight="10dp"
+                android:visibility="gone" />
 
         </LinearLayout>
 

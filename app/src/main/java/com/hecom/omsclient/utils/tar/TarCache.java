@@ -5,6 +5,7 @@ import android.util.Log;
 import android.webkit.WebResourceResponse;
 
 import com.hecom.log.HLog;
+import com.hecom.omsclient.BuildConfig;
 import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.utils.PathUtils;
 import com.hecom.omsclient.utils.Tools;
@@ -83,17 +84,17 @@ public class TarCache {
         if (isTarExists()) {
             content = getCacheFileFromTar(relativePath);
             if (content != null) {
-                Log.d("TarCache", "从Tar文件中获取缓存文件成功..,relativePath=" + relativePath);
+                HLog.i("TarCache", "从Tar文件中获取缓存文件成功..,relativePath=" + relativePath);
                 return new ByteArrayInputStream(content);
             } else {
-                HLog.d("TarCache", "从Tar文件中获取缓存文件失败,relativePath=" + relativePath);
+                HLog.i("TarCache", "从Tar文件中获取缓存文件失败,relativePath=" + relativePath);
             }
         }
         return null;
     }
 
     private static byte[] getCacheFileFromTar(String relativeFilePath) {
-        relativeFilePath = relativeFilePath.replaceFirst("http://ptest.hecom.cn/omsmobile/", "");
+        relativeFilePath = getRelativePath(relativeFilePath);
         try {
             TarArchiveInputStream tais = new TarArchiveInputStream(new FileInputStream(getTarFile()));
             TarArchiveEntry entry = null;
@@ -141,7 +142,6 @@ public class TarCache {
      * @return
      */
     private static String getRelativePath(String remotePath) {
-        return remotePath;
+        return remotePath.replaceFirst(BuildConfig.HOST, "app/");
     }
-
 }

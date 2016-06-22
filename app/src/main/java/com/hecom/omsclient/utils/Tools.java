@@ -315,6 +315,8 @@ public class Tools {
         System.out.println(VersionCompare("2.0.1", "2.1"));
         System.out.println(VersionCompare("3.0.1", "2.1.9.e.5.454"));
         System.out.println(VersionCompare("3.0.10", "3.0.11"));
+
+        System.out.println(VersionCompare("3.0.1a", "3.6.1b"));
     }
 
 

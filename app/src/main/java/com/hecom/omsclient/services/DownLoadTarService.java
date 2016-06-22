@@ -118,9 +118,14 @@ public class DownLoadTarService extends IntentService {
                                 });
                             }
                         }
+
+                        @Override
+                        public void onProgress(long bytesWritten, long totalSize) {
+                            super.onProgress(bytesWritten, totalSize);
+                        }
                     });
                 } else {
-                    HLog.d(TAG, "tar包不需要更新");
+                    HLog.i(TAG, "tar包不需要更新");
                 }
             }
 

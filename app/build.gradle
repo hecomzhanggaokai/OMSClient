@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
-        versionName "0.0.0.1"
+        versionName "0.0.1"
     }
 
     signingConfigs {
@@ -26,15 +26,28 @@ android {
             shrinkResources true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
+            buildConfigField("String", "BASEURL", '"http://dingtalk.hecom.cn/oms/omslogin.html"')
+            buildConfigField("String", "HOST", '"http://dingtalk.hecom.cn/oms/"')
+
+
         }
         debug {
             debuggable true
             signingConfig signingConfigs.release
+            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/app/omslogin.html"')
+            buildConfigField("String", "HOST", '"http://ptest.hecom.cn/omsmobile/app/"')
         }
     }
 
     productFlavors {
         dev { minSdkVersion 21 }
+    }
+
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            def file = output.outputFile
+            output.outputFile = new File(file.parent, file.name.replace(file.name,"omsclient-" + "${variant.buildType.name}" + "-" + defaultConfig.versionName + ".apk"))
+        }
     }
 }
 
