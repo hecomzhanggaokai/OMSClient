@@ -12,9 +12,13 @@ import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
 import android.widget.ImageView;
 
+import com.google.gson.Gson;
+import com.hecom.log.HLog;
 import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.R;
 import com.hecom.omsclient.application.OMSClientApplication;
+import com.hecom.omsclient.entity.UpdateInfoEntity;
+import com.hecom.omsclient.services.DownLoadAPKService;
 import com.hecom.omsclient.services.DownLoadTarService;
 import com.hecom.omsclient.utils.PathUtils;
 import com.hecom.omsclient.utils.SharedPreferencesUtils;
@@ -33,11 +37,19 @@ import cz.msebera.android.httpclient.Header;
 public class SplashActivity extends AppCompatActivity {
     private static final long SPLASHLASTS = 3000;
     private ImageView image;
+    public static final String TAG = "SplashActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
+//
+//        try {
+//            Thread.sleep(5000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+
         image = (ImageView) findViewById(R.id.image);
         Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
@@ -54,7 +66,7 @@ public class SplashActivity extends AppCompatActivity {
 
     private void checkSplashImg() {
         RequestParams params = new RequestParams();
-        OMSClientApplication.getHttpClient().post("检查splashimg地址", params, new AsyncHttpResponseHandler() {
+        OMSClientApplication.getHttpClient().post(Constants.CHECKURL, params, /*new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -85,9 +97,9 @@ public class SplashActivity extends AppCompatActivity {
                             }
                         }
                     });
-                }/* else {
+                }*//* else {
                     showSplashImg();
-                }*/
+                }*//*
 
 
             }
@@ -97,42 +109,101 @@ public class SplashActivity extends AppCompatActivity {
 
             }
 
+        }*/ new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, final UpdateInfoEntity response) {
+                if (!response.isSuccess()) {
+                    HLog.e("SplashActivity", "数据请返回错误");
+                    return;
+                }
+
+                if (response.getData().isAPkNeedUpdate()) {
+                    startDownLoadApk(response.getData().getAndroid_apk_dlurl());
+                }
+
+                if (response.getData().isSplashImgNeedDownLoad()) {
+                    OMSClientApplication.getHttpClient().get(response.getData().getSplash_img_url(), new FileAsyncHttpResponseHandler(SplashActivity.this) {
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
+
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, final File cachedFile) {
+                            File file = PathUtils.getFileDirs();
+                            if (file != null) {
+                                File splashImgLocal = new File(file.getAbsolutePath() + File.separator + Constants.SPLASHIMGNAME);
+                                Tools.moveFile(cachedFile, splashImgLocal, new Tools.moveFile() {
+                                    @Override
+                                    public void success() {
+                                        SharedPreferencesUtils.set(Constants.SPLASHURLKEY, response.getData().getSplash_img_url());
+                                        HLog.i("DownLoadTarService", "更新splashimg成功");
+                                    }
+
+                                    @Override
+                                    public void failed() {
+
+                                    }
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    HLog.d(TAG, "splashimg不需要更新");
+                }
+
+
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, UpdateInfoEntity errorResponse) {
+                HLog.e("SplashActivity", "数据请求发生错误");
+            }
+
+            @Override
+            protected UpdateInfoEntity parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                if (rawJsonData == null) {
+                    return null;
+                }
+                Gson gson = new Gson();
+                return gson.fromJson(rawJsonData, UpdateInfoEntity.class);
+            }
         });
 
 
     }
 
 
-    private boolean isSplashImgExists() {
-        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
-        if (TextUtils.isEmpty(localSplashImgUrl)) {
-            return false;
-        }
-        File file = PathUtils.getFileDirs();
-        if (file == null) {
-            return false;
-        }
-        File splashFile = new File(file.getAbsolutePath() + File.separator + Constants.SPLASHIMGNAME);
-        return splashFile.exists();
-    }
-
-    private boolean needDownLoad(String remoteSplashUrl) {
-        //存储空间都没有,当然不用再去下载了......
-        File file = PathUtils.getFileDirs();
-        if (file == null) {
-            return false;
-        }
-
-        if (!isSplashImgExists()) {
-            return true;
-        }
-
-        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
-        return !(remoteSplashUrl.equals(localSplashImgUrl));
-    }
+//    private boolean isSplashImgExists() {
+//        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
+//        if (TextUtils.isEmpty(localSplashImgUrl)) {
+//            return false;
+//        }
+//        File file = PathUtils.getFileDirs();
+//        if (file == null) {
+//            return false;
+//        }
+//        File splashFile = new File(file.getAbsolutePath() + File.separator + Constants.SPLASHIMGNAME);
+//        return splashFile.exists();
+//    }
+//
+//    private boolean needDownLoad(String remoteSplashUrl) {
+//        //存储空间都没有,当然不用再去下载了......
+//        File file = PathUtils.getFileDirs();
+//        if (file == null) {
+//            return false;
+//        }
+//
+//        if (!isSplashImgExists()) {
+//            return true;
+//        }
+//
+//        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
+//        return !(remoteSplashUrl.equals(localSplashImgUrl));
+//    }
 
     private void showSplashImg() {
-        if (isSplashImgExists()) {
+        if (Tools.isSplashImgExists()) {
             File splashFile = new File(PathUtils.getFileDirs() + File.separator + Constants.SPLASHIMGNAME);
             OMSClientApplication.getInstance().getImageLoader().displayImage("file://" + splashFile.getAbsolutePath(), image);
         } else {
@@ -145,6 +216,14 @@ public class SplashActivity extends AppCompatActivity {
     private void startTarSyncServices() {
         Intent intent = new Intent();
         intent.setClass(this, DownLoadTarService.class);
+        startService(intent);
+    }
+
+    private void startDownLoadApk(String apkUrl) {
+
+        Intent intent = new Intent();
+        intent.setClass(this, DownLoadAPKService.class);
+        intent.putExtra("url", apkUrl);
         startService(intent);
     }
 

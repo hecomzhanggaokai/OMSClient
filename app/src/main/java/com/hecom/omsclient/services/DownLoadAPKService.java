@@ -9,8 +9,11 @@ import android.content.Intent;
 import android.net.Uri;
 import android.support.v4.app.NotificationCompat;
 
+import com.hecom.log.HLog;
+import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.application.OMSClientApplication;
 import com.hecom.omsclient.utils.PathUtils;
+import com.hecom.omsclient.utils.Tools;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -23,6 +26,8 @@ import cz.msebera.android.httpclient.Header;
  */
 public class DownLoadAPKService extends IntentService {
     NotificationManager mNotificationManager;
+    private String apkUrl;
+    private String TAG = "DownLoadAPKService";
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -31,18 +36,27 @@ public class DownLoadAPKService extends IntentService {
      */
     public DownLoadAPKService(String name) {
         super(name);
-        mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+    }
+
+    @Override
+    public int onStartCommand(Intent intent, int flags, int startId) {
+        return super.onStartCommand(intent, flags, startId);
+    }
+
+    public DownLoadAPKService() {
+        super("DownLoadAPKService");
     }
 
     @Override
     protected void onHandleIntent(Intent args) {
-
+        mNotificationManager = (NotificationManager) OMSClientApplication.getInstance().getSystemService(Context.NOTIFICATION_SERVICE);
+        apkUrl = args.getStringExtra("url");
         RequestParams params = new RequestParams();
 //        params
-        OMSClientApplication.getSyncHttpClient().post("tar更新http url", params, new FileAsyncHttpResponseHandler(DownLoadAPKService.this) {
+        OMSClientApplication.getSyncHttpClient().post(apkUrl, params, new FileAsyncHttpResponseHandler(DownLoadAPKService.this) {
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-
+                HLog.i(TAG, "下载过程发生错误,statusCode = " + statusCode);
             }
 
             @Override
@@ -50,7 +64,18 @@ public class DownLoadAPKService extends IntentService {
                 File file = PathUtils.getFileDirs();
                 if (file != null) {
                     File tarLocalFile = new File(file.getAbsolutePath() + File.separator + response.getName());
-                    response.renameTo(tarLocalFile);
+//                    response.renameTo(tarLocalFile);
+                    Tools.moveFile(response, tarLocalFile, new Tools.moveFile() {
+                        @Override
+                        public void success() {
+                            HLog.i(TAG, "下载完毕,准备安装");
+                        }
+
+                        @Override
+                        public void failed() {
+
+                        }
+                    });
                     installApk(tarLocalFile);
                 }
             }

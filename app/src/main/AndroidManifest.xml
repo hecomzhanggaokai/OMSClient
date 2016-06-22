@@ -32,12 +32,12 @@
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".application.OMSClientApplication"
         android:allowBackup="false"
+        android:hardwareAccelerated="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
@@ -72,6 +72,9 @@
             android:name=".widget.AlertActivity"
             android:configChanges="orientation|keyboardHidden"
             android:theme="@style/DialogNoTitle" />
+
+        <service android:name=".services.DownLoadTarService" />
+        <service android:name=".services.DownLoadAPKService" />
     </application>
 
 </manifest>

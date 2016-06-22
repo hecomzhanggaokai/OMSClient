@@ -4,13 +4,16 @@ import android.app.IntentService;
 import android.content.Intent;
 import android.text.TextUtils;
 
+import com.google.gson.Gson;
 import com.hecom.log.HLog;
 import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.application.OMSClientApplication;
+import com.hecom.omsclient.entity.UpdateInfoEntity;
 import com.hecom.omsclient.utils.PathUtils;
 import com.hecom.omsclient.utils.SharedPreferencesUtils;
 import com.hecom.omsclient.utils.Tools;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
 
@@ -22,6 +25,7 @@ import cz.msebera.android.httpclient.Header;
  * Created by zhanggaokai on 16/6/16.
  */
 public class DownLoadTarService extends IntentService {
+    public static final String TAG = "DownLoadTarService";
 
     /**
      * Creates an IntentService.  Invoked by your subclass's constructor.
@@ -32,13 +36,16 @@ public class DownLoadTarService extends IntentService {
         super(name);
     }
 
+    public DownLoadTarService() {
+        super("DownLoadTarService");
+    }
+
     @Override
     protected void onHandleIntent(Intent intent) {
         //是否需要下载tar
-
         RequestParams params = new RequestParams();
 //        params
-        OMSClientApplication.getSyncHttpClient().post("tar更新http url", params, new AsyncHttpResponseHandler() {
+        OMSClientApplication.getSyncHttpClient().post(Constants.CHECKURL, params, /*new AsyncHttpResponseHandler() {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
@@ -78,38 +85,90 @@ public class DownLoadTarService extends IntentService {
             public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
 
             }
+        }*/new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, final UpdateInfoEntity response) {
+                if (!response.isSuccess()) {
+                    HLog.e("SplashActivity", "数据请返回错误");
+                    return;
+                }
+                if (response.getData().isTarNeedDownLoad()) {
+                    OMSClientApplication.getSyncHttpClient().get(response.getData().getHtml_dlurl(), new FileAsyncHttpResponseHandler(DownLoadTarService.this) {
+                        @Override
+                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
+                            HLog.e("DownLoadTarService", "更新tar包失败,网络原因");
+                        }
+
+                        @Override
+                        public void onSuccess(int statusCode, Header[] headers, File cachedFile) {
+                            File file = PathUtils.getFileDirs();
+                            if (file != null) {
+                                File tarLocalFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
+                                Tools.moveFile(cachedFile, tarLocalFile, new Tools.moveFile() {
+                                    @Override
+                                    public void success() {
+                                        HLog.i("DownLoadTarService", "更新tar包成功");
+                                        SharedPreferencesUtils.set(Constants.TARVERSION, response.getData().getHtml_version());
+                                    }
+
+                                    @Override
+                                    public void failed() {
+                                        HLog.e("DownLoadTarService", "更新tar包失败,已经成功下载,复制的时候出错");
+                                    }
+                                });
+                            }
+                        }
+                    });
+                } else {
+                    HLog.d(TAG, "tar包不需要更新");
+                }
+            }
+
+            @Override
+            public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, UpdateInfoEntity errorResponse) {
+
+            }
+
+            @Override
+            protected UpdateInfoEntity parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
+                if (rawJsonData == null) {
+                    return null;
+                }
+                Gson gson = new Gson();
+                return gson.fromJson(rawJsonData, UpdateInfoEntity.class);
+            }
         });
 
     }
 
-    private boolean needDownLoad(String remoteUrl) {
-        File file = PathUtils.getFileDirs();
-        if (file == null) {
-            return false;
-        }
-
-        if (!isTarExists()) {
-            return true;
-        }
-
-        String localTarUrl = SharedPreferencesUtils.get(Constants.TARURLKEY);
-        if (remoteUrl.equals(localTarUrl)) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private boolean isTarExists() {
-        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
-        if (TextUtils.isEmpty(localSplashImgUrl)) {
-            return false;
-        }
-        File file = PathUtils.getFileDirs();
-        if (file == null) {
-            return false;
-        }
-        File splashFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
-        return splashFile.exists();
-    }
+//    private boolean needDownLoad(String remoteUrl) {
+//        File file = PathUtils.getFileDirs();
+//        if (file == null) {
+//            return false;
+//        }
+//
+//        if (!isTarExists()) {
+//            return true;
+//        }
+//
+//        String localTarUrl = SharedPreferencesUtils.get(Constants.TARURLKEY);
+//        if (remoteUrl.equals(localTarUrl)) {
+//            return false;
+//        } else {
+//            return true;
+//        }
+//    }
+//
+//    private boolean isTarExists() {
+//        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
+//        if (TextUtils.isEmpty(localSplashImgUrl)) {
+//            return false;
+//        }
+//        File file = PathUtils.getFileDirs();
+//        if (file == null) {
+//            return false;
+//        }
+//        File splashFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
+//        return splashFile.exists();
+//    }
 }
