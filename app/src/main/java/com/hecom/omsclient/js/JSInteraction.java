@@ -488,9 +488,7 @@ public class JSInteraction {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        if (cangoback == null) {
-            runJsFunction("onJSListener", params.toString());
-        }
+        runJsFunction("onJSListener", params.toString());
     }
 
     public void onNewLinkClose() {

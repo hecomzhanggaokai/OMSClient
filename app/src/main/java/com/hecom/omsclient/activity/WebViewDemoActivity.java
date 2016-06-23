@@ -56,7 +56,7 @@ public class WebViewDemoActivity extends FragmentActivity {
         webViewFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.webViewContainer, webViewFragment).commit();
         //免的app被强杀之后再次提示更新
-        if (savedInstanceState == null) {
+        if (savedInstanceState == null&&!isFromOpenLink) {
             checkApkVersion();
         }
     }

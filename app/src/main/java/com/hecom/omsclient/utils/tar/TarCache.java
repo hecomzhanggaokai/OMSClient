@@ -34,23 +34,23 @@ public class TarCache {
         }
 
         //H5选择本地图片http://app/imagePreview?filePath=[param]
-        String app_preview_url = "http://app/imagePreview?filePath=";
-        if (url.startsWith(app_preview_url) && url.length() > app_preview_url.length()) {
-            String picTmpDir = Tools.getPicSaveDir("");
-            String imageFileName = url.substring(app_preview_url.length());
-            try {
-                imageFileName = URLDecoder.decode(imageFileName, "UTF-8");
-                File file = new File(picTmpDir, imageFileName);
-                if (file.exists()) {
-                    InputStream inputStream = new FileInputStream(file);
-                    if (inputStream != null) {
-                        return new WebResourceResponse(Tools.getMIMEType(file), "UTF-8", inputStream);
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+//        String app_preview_url = "http://app/imagePreview?filePath=";
+//        if (url.startsWith(app_preview_url) && url.length() > app_preview_url.length()) {
+//            String picTmpDir = Tools.getPicSaveDir("");
+//            String imageFileName = url.substring(app_preview_url.length());
+//            try {
+//                imageFileName = URLDecoder.decode(imageFileName, "UTF-8");
+//                File file = new File(picTmpDir, imageFileName);
+//                if (file.exists()) {
+//                    InputStream inputStream = new FileInputStream(file);
+//                    if (inputStream != null) {
+//                        return new WebResourceResponse(Tools.getMIMEType(file), "UTF-8", inputStream);
+//                    }
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
 
 
 //        if (!ISTARENABLE) {
@@ -79,15 +79,15 @@ public class TarCache {
     }
 
 
-    public static InputStream getCacheFile(String relativePath) {
+    public static InputStream getCacheFile(String remoteUrl) {
         byte[] content = null;
         if (isTarExists()) {
-            content = getCacheFileFromTar(relativePath);
+            content = getCacheFileFromTar(remoteUrl);
             if (content != null) {
-                HLog.i("TarCache", "从Tar文件中获取缓存文件成功..,relativePath=" + relativePath);
+                HLog.i("TarCache", "从Tar文件中获取缓存文件成功,remotepath=" + remoteUrl + "  remoteUrl = " + getRelativePath(remoteUrl));
                 return new ByteArrayInputStream(content);
             } else {
-                HLog.i("TarCache", "从Tar文件中获取缓存文件失败,relativePath=" + relativePath);
+                HLog.i("TarCache", "从Tar文件中获取缓存文件失败,remoteUrl=" + remoteUrl);
             }
         }
         return null;

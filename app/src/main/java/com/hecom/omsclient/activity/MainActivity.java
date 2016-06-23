@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
+import com.hecom.omsclient.BuildConfig;
 import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.R;
 
@@ -19,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     public void demo(View view) {
         Intent intent = new Intent();
         intent.setClass(this, WebViewDemoActivity.class);
-        intent.putExtra("url", Constants.URL);
+        intent.putExtra("url", BuildConfig.BASEURL);
         startActivity(intent);
     }
 

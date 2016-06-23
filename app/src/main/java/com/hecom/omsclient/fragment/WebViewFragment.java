@@ -191,10 +191,10 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
 
             String text = args.getText();
             if (TextUtils.isEmpty(text)) {
-                tv_back.setText("");
+                right_text.setText("");
                 setRegister(false);
             } else {
-                tv_back.setText(text);
+                right_text.setText(text);
                 setRegister(true);
             }
 
@@ -1022,6 +1022,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         tv_right2.setOnClickListener(this);
         icon_right1.setOnClickListener(this);
         icon_right2.setOnClickListener(this);
+        right_text.setOnClickListener(this);
         webview.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 pb_loading.setVisibility(View.VISIBLE);
@@ -1191,7 +1192,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         //注意：拍照页面弹出时，低内存手机可能会回收此页，在此方法并调用时重新oncreate(), onActiivtyResult(),
         //所以需要对jsResolver进行判空操作
         if (requestCode == ACTIVITY_REQUEST_NEW_LINK) {
-            jsInteraction.onNewLinkClose();
+//            jsInteraction.onNewLinkClose();
         }
 //        else if (requestCode == ACTIVITY_REQUEST_TAKE_PHOTO && uploadImageResolver != null) {
 //
@@ -1494,7 +1495,12 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
             case R.id.tv_back:
                 Log.e(TAG, "后退键按了...");
 //                UserTrack.click("fh");
-                onBack();
+//                setLeftListener.onClick();
+                if (setLeftListener != null && setLeftListener.isRegister()) {
+                    setLeftListener.onClick();
+                } else {
+                    onBack();
+                }
                 break;
             case R.id.tv_right1:
             case R.id.icon_right1:
@@ -1514,16 +1520,20 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         }
     }
 
+    //第一次的时候不凋resunme
+    private boolean isFirstOpen = true;
+
     @Override
     public void onResume() {
         super.onResume();
-        if (jsInteraction != null) {
+        if (jsInteraction != null && !isFirstOpen) {
             jsInteraction.callOnJSListener("resume", null);
         }
     }
 
     @Override
     public void onPause() {
+        isFirstOpen = false;
         super.onPause();
         if (jsInteraction != null) {
             jsInteraction.callOnJSListener("pause", null);
