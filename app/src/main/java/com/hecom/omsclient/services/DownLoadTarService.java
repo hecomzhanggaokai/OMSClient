@@ -45,47 +45,7 @@ public class DownLoadTarService extends IntentService {
         //是否需要下载tar
         RequestParams params = new RequestParams();
 //        params
-        OMSClientApplication.getSyncHttpClient().post(Constants.CHECKURL, params, /*new AsyncHttpResponseHandler() {
-
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                //判断是否需要下载
-                String remoteUrl = "";
-                if (needDownLoad(remoteUrl)) {
-                    OMSClientApplication.getSyncHttpClient().get(remoteUrl, new FileAsyncHttpResponseHandler(DownLoadTarService.this) {
-                        @Override
-                        public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-                            HLog.e("DownLoadTarService", "更新tar包失败,网络原因");
-                        }
-
-                        @Override
-                        public void onSuccess(int statusCode, Header[] headers, File response) {
-                            File file = PathUtils.getFileDirs();
-                            if (file != null) {
-                                File tarLocalFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
-                                Tools.moveFile(response, tarLocalFile, new Tools.moveFile() {
-                                    @Override
-                                    public void success() {
-                                        HLog.i("DownLoadTarService", "更新tar包成功");
-                                    }
-
-                                    @Override
-                                    public void failed() {
-                                        HLog.e("DownLoadTarService", "更新tar包失败,已经成功下载,复制的时候出错");
-                                    }
-                                });
-                            }
-                        }
-                    });
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
-            }
-        }*/new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
+        OMSClientApplication.getSyncHttpClient().post(Constants.CHECKURL, params,new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, final UpdateInfoEntity response) {
                 if (!response.isSuccess()) {

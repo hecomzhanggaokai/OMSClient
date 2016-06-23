@@ -54,6 +54,7 @@ import android.widget.Toast;
 //import com.hecom.util.json.JSONObject;
 //import com.tencent.bugly.crashreport.CrashReport;
 
+import com.hecom.log.HLog;
 import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.application.OMSClientApplication;
 
@@ -144,6 +145,8 @@ public class Tools {
                             e.printStackTrace();
                         }
                     }
+                    from.delete();
+                    HLog.i("Tools","删除缓存文件");
                 }
             }
         }).start();
@@ -243,10 +246,10 @@ public class Tools {
     }
 
     public static boolean isTarExists() {
-        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
-        if (TextUtils.isEmpty(localSplashImgUrl)) {
-            return false;
-        }
+//        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
+//        if (TextUtils.isEmpty(localSplashImgUrl)) {
+//            return false;
+//        }
         File file = PathUtils.getFileDirs();
         if (file == null) {
             return false;

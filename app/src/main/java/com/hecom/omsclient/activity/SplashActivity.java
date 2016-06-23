@@ -46,7 +46,7 @@ public class SplashActivity extends AppCompatActivity {
             }
         }, SPLASHLASTS);
         checkSplashImg();
-        startTarSyncServices();
+//        startTarSyncServices();
         showSplashImg();
         animatorAlph();
     }
@@ -60,6 +60,15 @@ public class SplashActivity extends AppCompatActivity {
                     HLog.e("SplashActivity", "数据请返回错误");
                     return;
                 }
+                //如果tar包也需要升级的话,首先删除旧的tar
+                if (response.getData().isTarNeedDownLoad() && Tools.isTarExists()) {
+                    HLog.i(TAG, "发现tar包新版本,删除老版本,防止从老版本中加载资源");
+                    File file = PathUtils.getFileDirs();
+                    File tarFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
+                    tarFile.delete();
+                }
+
+                startTarSyncServices();
 
                 if (response.getData().isSplashImgNeedDownLoad()) {
                     OMSClientApplication.getHttpClient().get(response.getData().getSplash_img_url(), new FileAsyncHttpResponseHandler(SplashActivity.this) {

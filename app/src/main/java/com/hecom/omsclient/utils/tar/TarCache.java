@@ -142,6 +142,14 @@ public class TarCache {
      * @return
      */
     private static String getRelativePath(String remotePath) {
-        return remotePath.replaceFirst(BuildConfig.HOST, "app/");
+        String result = remotePath;
+        result = remotePath.replaceFirst(BuildConfig.HOST, "app/");
+
+        int index = result.lastIndexOf(".ttf?");
+        if (index != -1) {
+            result = result.substring(0, index + ".ttf?".length() - 1);
+        }
+
+        return result;
     }
 }
