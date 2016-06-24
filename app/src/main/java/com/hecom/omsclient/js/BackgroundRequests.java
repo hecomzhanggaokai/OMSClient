@@ -34,11 +34,14 @@ import com.hecom.omsclient.js.entity.ChosenEntity;
 import com.hecom.omsclient.js.entity.ParamActionSheet;
 import com.hecom.omsclient.js.entity.ParamAlert;
 import com.hecom.omsclient.js.entity.ParamConfirm;
+import com.hecom.omsclient.js.entity.ParamLocalStorage;
+import com.hecom.omsclient.js.entity.ParamLocalStorageGet;
 import com.hecom.omsclient.js.entity.ParamPreloader;
 import com.hecom.omsclient.js.entity.ParamText;
 import com.hecom.omsclient.js.entity.ParamTimeFormat;
 import com.hecom.omsclient.server.BDLocationHandler;
 import com.hecom.omsclient.server.BaseHandler;
+import com.hecom.omsclient.utils.SharedPreferencesUtils;
 import com.hecom.omsclient.widget.AlertDialogWidget;
 import com.hecom.omsclient.widget.DialogContent;
 
@@ -76,6 +79,69 @@ public class BackgroundRequests /*implements OnRequestSavedListener*/ {
 
     public void bind(JSInteraction interaction) {
         this.jsInteraction = interaction;
+
+    //localstorage set
+        jsInteraction.addJsResolver(JSTaskTypes.LOCALSTORAGESETITEM, new JSResolverFactory() {
+            @Override
+            public JSInteraction.JsResolver create(int taskId) {
+                return new JSInteraction.JsResolver<ParamLocalStorage>(true) {
+                    @Override
+                    protected JSONObject onJsCall(ParamLocalStorage args) {
+                        SharedPreferencesUtils.setByJs(args.getName(), args.getValue());
+                        return null;
+                    }
+                };
+            }
+        });
+    //localstorage get
+        jsInteraction.addJsResolver(JSTaskTypes.LOCALSTORAGEGETITEM, new JSResolverFactory() {
+            @Override
+            public JSInteraction.JsResolver create(int taskId) {
+                return new JSInteraction.JsResolver<ParamLocalStorageGet>(false) {
+                    @Override
+                    protected JSONObject onJsCall(ParamLocalStorageGet args) {
+                        String value = SharedPreferencesUtils.getByJs(args.getName());
+                        JSONObject result = new JSONObject();
+                        try {
+                            result.put("value", value);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        setResult(result);
+                        return null;
+                    }
+                };
+            }
+        });
+
+    //localstorage removeitem
+        jsInteraction.addJsResolver(JSTaskTypes.LOCALSTORAGEREMOVEITEM, new JSResolverFactory() {
+            @Override
+            public JSInteraction.JsResolver create(int taskId) {
+                return new JSInteraction.JsResolver<ParamLocalStorageGet>(true) {
+                    @Override
+                    protected JSONObject onJsCall(ParamLocalStorageGet args) {
+                        SharedPreferencesUtils.removeByJs(args.getName());
+                        return null;
+                    }
+                };
+            }
+        });
+
+    //localstorage clear
+        jsInteraction.addJsResolver(JSTaskTypes.LOCALSTORAGECLEAR, new JSResolverFactory() {
+            @Override
+            public JSInteraction.JsResolver create(int taskId) {
+                return new JSInteraction.JsResolver<Void>(true) {
+                    @Override
+                    protected JSONObject onJsCall(Void args) {
+                        SharedPreferencesUtils.clearJs();
+                        return null;
+                    }
+                };
+            }
+        });
+
 
         // TOAST
         jsInteraction.addJsResolver(JSTaskTypes.TOAST, new JSResolverFactory() {

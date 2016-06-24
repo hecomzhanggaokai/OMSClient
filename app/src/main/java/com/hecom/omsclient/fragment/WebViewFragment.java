@@ -2,6 +2,7 @@ package com.hecom.omsclient.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -1163,20 +1164,27 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         webview.getSettings().setDomStorageEnabled(true);
         //开启 database storage API 功能
         webview.getSettings().setDatabaseEnabled(true);
+        String databasePath = OMSClientApplication.getInstance().getDir("database", Context.MODE_PRIVATE).getPath();
+        webview.getSettings().setDatabasePath(databasePath);
+
         webview.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
         webview.getSettings().setAllowFileAccess(true);
+        webview.setVerticalScrollBarEnabled(false);
+
+
 //        webview.getSettings().setCacheMode(WebSettings.);
 //        webview.getSettings().setAppCacheEnabled(true);
 
-        if (PathUtils.getFileDirs() != null) {
-            String appCachePath = PathUtils.getFileDirs().getAbsolutePath();
-            webview.getSettings().setAppCachePath(appCachePath);
-        }
+//        if (PathUtils.getFileDirs() != null) {
+//            String appCachePath = PathUtils.getFileDirs().getAbsolutePath();
+//            webview.getSettings().setAppCachePath(appCachePath);
+//            webview.getSettings().setDatabasePath(appCachePath);
+//        }
 
 
         /////
-        webview.getSettings().setUseWideViewPort(true);
-        webview.getSettings().setLoadWithOverviewMode(true);
+//        webview.getSettings().setUseWideViewPort(true);
+//        webview.getSettings().setLoadWithOverviewMode(true);
 
 //		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
 //			webview.getSettings().setLoadsImagesAutomatically(true);

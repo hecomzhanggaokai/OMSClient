@@ -9,7 +9,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
-        versionName "0.0.1"
+        versionName "0.0.2"
     }
 
     signingConfigs {
@@ -36,11 +36,14 @@ android {
         debug {
             debuggable true
             signingConfig signingConfigs.release
-            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/app/omslogin.html"')
-//            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/jsapi/demo.html"')
+//            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/app/omslogin.html"')
+            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/jsapi/demo.html"')
             buildConfigField("String", "HOST", '"http://ptest.hecom.cn/omsmobile/app/"')
 //            buildConfigField("String", "NET_HOST", "\"http://123.56.17.239:8080/\"")
+//            buildConfigField("String", "NET_HOST", "\"http://123.56.17.239:8080/\"")
+
             buildConfigField("String", "NET_HOST", "\"http://mm.hecom.cn/\"")
+
             buildConfigField("String", "CKECK_URL", "\"http://ptest.hecom.cn/oms4/apiLogin/version\"")
 
         }

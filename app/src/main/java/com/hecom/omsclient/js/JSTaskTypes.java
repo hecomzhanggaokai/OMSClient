@@ -123,6 +123,12 @@ public class JSTaskTypes {
     public static final String CHOSEN = "biz.util.chosen";
 
     public static final String UPLOADIMAGE = "biz.util.uploadImage";
-
-
+    //通用本地存储接口
+    public static final String LOCALSTORAGEGETITEM = "util.localStorage.getItem";
+    // 设置某条数据
+    public static final String LOCALSTORAGESETITEM = "util.localStorage.setItem";
+    //删除某条数据
+    public static final String LOCALSTORAGEREMOVEITEM = "util.localStorage.removeItem";
+    //清空全部数据
+    public static final String LOCALSTORAGECLEAR = "util.localStorage.clear";
 }
