@@ -1,4 +1,4 @@
-package com.hecom.utils;
+package com.hecom.omsclient.utils;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

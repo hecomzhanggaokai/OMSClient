@@ -1,4 +1,4 @@
-package com.hecom.utils;
+package com.hecom.omsclient.utils;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
