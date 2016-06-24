@@ -1,0 +1,45 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <uk.co.senab.photoview.sample.HackyViewPager
+        android:id="@+id/viewpager_images"
+        android:layout_width="match_parent"
+        android:layout_height="0dip"
+        android:layout_weight="1"
+        android:background="@color/black" />
+
+    <LinearLayout
+        android:id="@+id/ll_contain_two_btn"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/camera_detail_bg"
+        android:orientation="horizontal"
+        android:weightSum="2" >
+
+        <ImageView
+            android:id="@+id/btn_delete"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@drawable/camera_detail_delete" />
+
+        <ImageView
+            android:id="@+id/detail_middle_line"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/camera_detail_line" />
+
+        <ImageView
+            android:id="@+id/btn_close"
+            android:layout_width="0dip"
+            android:layout_height="fill_parent"
+            android:layout_weight="1"
+            android:scaleType="center"
+            android:src="@drawable/camera_detail_close" />
+    </LinearLayout>
+
+</LinearLayout>

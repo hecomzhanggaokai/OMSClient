@@ -1436,28 +1436,28 @@ public class Tools {
         return false;
     }
 
-//
-//	/**
-//	 * 判断APK是否注册某项权限
-//	 *
-//	 * @param cx
-//	 * @param permissionName 权限名称
-//	 * @return
-//	 */
-//	public static boolean checkPermission(Context cx, String permissionName) {
-//		try {
-//			PackageManager pm = cx.getPackageManager();
-//			int res = pm.checkPermission(permissionName, getPackageName(cx));
-//			if (res == PackageManager.PERMISSION_DENIED) {
-//				return false;
-//			} else {
-//				return true;
-//			}
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return false;
-//		}
-//	}
+
+	/**
+	 * 判断APK是否注册某项权限
+	 *
+	 * @param cx
+	 * @param permissionName 权限名称
+	 * @return
+	 */
+	public static boolean checkPermission(Context cx, String permissionName) {
+		try {
+			PackageManager pm = cx.getPackageManager();
+			int res = pm.checkPermission(permissionName, getPackageName(cx));
+			if (res == PackageManager.PERMISSION_DENIED) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 //
 //	/**
 //	 * 判断当前app是否正在显示（最前端）
@@ -1484,31 +1484,31 @@ public class Tools {
 //		return false;
 //	}
 //
-//	/**
-//	 * 获得保存图片的路径+文件名
-//	 * <p>
-//	 * 根据不用业务，使用pictmp/folderType/指定的照片存储路径。如果为空，则使用默认的pictmp/路径
-//	 * </p>
-//	 * 建议使用folderType。例如在启动CamerActivity的时候，传入"typeFileFolder"参数,来制定不同业务,
-//	 * 使用不同的图片文件夹
-//	 *
-//	 * @param account    账号
-//	 * @param folderType 不同的业务文件夹路径
-//	 * @return
-//	 */
-//	public static String getPicSaveFilePath(String account, String folderType) {
-//        /* 照片将被保存到 SD 卡跟目录下，文件名为系统时间，后缀名为".jpg" */
-//		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-//		String fileDir = getPicSaveDir(folderType);
-//		StringBuilder stringBuilder = new StringBuilder();
-//		stringBuilder.append(fileDir);
-//		stringBuilder.append(account);
-//		stringBuilder.append("_");
-//		stringBuilder.append(formatter.format(new Date()));
-//		stringBuilder.append(".jpg");
-//		return stringBuilder.toString();
-//	}
-//
+	/**
+	 * 获得保存图片的路径+文件名
+	 * <p>
+	 * 根据不用业务，使用pictmp/folderType/指定的照片存储路径。如果为空，则使用默认的pictmp/路径
+	 * </p>
+	 * 建议使用folderType。例如在启动CamerActivity的时候，传入"typeFileFolder"参数,来制定不同业务,
+	 * 使用不同的图片文件夹
+	 *
+	 * @param account    账号
+	 * @param folderType 不同的业务文件夹路径
+	 * @return
+	 */
+	public static String getPicSaveFilePath(String account, String folderType) {
+        /* 照片将被保存到 SD 卡跟目录下，文件名为系统时间，后缀名为".jpg" */
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmssSSS");
+		String fileDir = getPicSaveDir(folderType);
+		StringBuilder stringBuilder = new StringBuilder();
+		stringBuilder.append(fileDir);
+		stringBuilder.append(account);
+		stringBuilder.append("_");
+		stringBuilder.append(formatter.format(new Date()));
+		stringBuilder.append(".jpg");
+		return stringBuilder.toString();
+	}
+
 //
 //	//本地图片按照服务器规则命名后,获取取此图片在服务器保存的URL
 //	public static String getRemoteUrl(String localFilePath) {

@@ -68,11 +68,11 @@ public class TarCache {
 //        //获取CACHE文件保存地址
 //        Plugin plugin = pluginTarget.getPlugin();
 //        //  File cacheFile = new File(getDir(), plugin.getCacheFile(pluginTarget.filePath));
-        InputStream inputStream = getCacheFile(url);
-        String localPath = "";
-        if (inputStream != null) {
-            return new WebResourceResponse(Tools.getMIMEType(localPath), "UTF-8", inputStream);
-        }
+//        InputStream inputStream = getCacheFile(url);
+//        String localPath = "";
+//        if (inputStream != null) {
+//            return new WebResourceResponse(Tools.getMIMEType(localPath), "UTF-8", inputStream);
+//        }
 
 
         return null;

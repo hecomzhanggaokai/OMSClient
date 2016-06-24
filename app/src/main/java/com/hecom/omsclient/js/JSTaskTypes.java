@@ -4,7 +4,7 @@ package com.hecom.omsclient.js;
  * @author tianlupan 2015/11/4
  */
 public class JSTaskTypes {
-//    dd.biz.util.chosen
+    //    dd.biz.util.chosen
     public static final String TOAST = "device.notification.toast"; //---
 //    public static final String GET_LOCATION = "biz.map.locate";
 //
@@ -71,7 +71,7 @@ public class JSTaskTypes {
     //静默获取地理位置
     public static final String SILENT_LOCATION = "device.geolocation.get";//---
 
-//    //选择模板UI
+    //    //选择模板UI
 //    public static final String SELECT_TEMPLATE = "biz.template.selectTemplate";
 //
 //    //获取模板
@@ -121,6 +121,8 @@ public class JSTaskTypes {
 //    public static final String DURATIONPICKER = "biz.util.durationpicker";
 
     public static final String CHOSEN = "biz.util.chosen";
+
+    public static final String UPLOADIMAGE = "biz.util.uploadImage";
 
 
 }

@@ -63,5 +63,12 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="comm_range_textview" parent="@android:style/Widget.TextView">
+        <item name="android:textColor">@drawable/top_textcolor_drawable_white</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">16dp</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:maxLength">8</item>
+    </style>
 
 </resources>

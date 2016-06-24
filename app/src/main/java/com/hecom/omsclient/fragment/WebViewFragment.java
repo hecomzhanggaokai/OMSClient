@@ -40,6 +40,7 @@ import com.hecom.omsclient.R;
 import com.hecom.omsclient.activity.PhotoViewerActivity;
 import com.hecom.omsclient.activity.WebViewDemoActivity;
 import com.hecom.omsclient.application.OMSClientApplication;
+import com.hecom.omsclient.camera.CameraActivity;
 import com.hecom.omsclient.js.BackgroundRequests;
 import com.hecom.omsclient.js.JSInteraction;
 import com.hecom.omsclient.js.JSResolverFactory;
@@ -50,20 +51,28 @@ import com.hecom.omsclient.js.entity.ParamPreviewImage;
 import com.hecom.omsclient.js.entity.ParamSetRight;
 import com.hecom.omsclient.js.entity.ParamSetTitle;
 import com.hecom.omsclient.js.entity.ParamText;
+import com.hecom.omsclient.js.entity.ParamUpload;
+import com.hecom.omsclient.utils.PathUtils;
 import com.hecom.omsclient.utils.Tools;
 import com.hecom.omsclient.utils.tar.TarCache;
+import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.RequestParams;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
+
+import cz.msebera.android.httpclient.Header;
 
 /**
  * 支持JSAPI的webview Fragment
@@ -200,6 +209,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
                 setRegister(true);
             }
 
+
 //            String[] values = args.getValue();
 //            String type = args.getType();
 //            hideTopRightButtons();
@@ -229,6 +239,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         }
     };
 
+
     private JSInteraction.JSListener setLeftListener = new JSInteraction.JSListener<ParamText>() {
         @Override
         protected void onJsCall(ParamText args) {
@@ -243,6 +254,89 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         }
 
     };
+
+    private class SelectLocalFileResolver extends JSInteraction.JsResolver<ParamUpload> {
+        public ParamUpload args;
+
+        public SelectLocalFileResolver(boolean sync) {
+            super(sync);
+        }
+
+        @Override
+        protected JSONObject onJsCall(ParamUpload args) {
+
+            this.args = args;
+            selectImageAndUploadDirectly = false;
+            upload_image_type = UPLOAD_IMAGE_TYPE.USER_SELECT;
+            new AlertDialog.Builder(getActivity())
+                    .setTitle("选择图片来源")
+                    .setCancelable(false)
+                    .setSingleChoiceItems(new String[]{"拍照上传", "选择图片上传"}, -1,
+                            new DialogInterface.OnClickListener() {
+
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    if (which == 0) {
+                                        selectPicFromCamera();
+                                    } else {
+                                        selectPicFromLocal();
+                                    }
+                                }
+                            }
+                    )
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            SelectLocalFileResolver.this.setError(jsInteraction.ERROR_USER_CANCELLED);
+                        }
+                    })
+                    .show();
+            return null;
+        }
+    }
+
+
+    SelectLocalFileResolver selectLocalFileResolver = new SelectLocalFileResolver(false);
+//        public ParamUpload args;
+//
+//
+//        @Override
+//        protected JSONObject onJsCall(ParamUpload args) {
+//            this.args = args;
+//            selectImageAndUploadDirectly = false;
+//            upload_image_type = UPLOAD_IMAGE_TYPE.USER_SELECT;
+//            new AlertDialog.Builder(getActivity())
+//                    .setTitle("选择图片来源")
+//                    .setCancelable(false)
+//                    .setSingleChoiceItems(new String[]{"拍照上传", "选择图片上传"}, -1,
+//                            new DialogInterface.OnClickListener() {
+//
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    dialog.dismiss();
+//                                    if (which == 0) {
+//                                        selectPicFromCamera();
+//                                    } else {
+//                                        selectPicFromLocal();
+//                                    }
+//                                }
+//                            }
+//                    )
+//                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialog, int which) {
+//                            selectLocalFileResolver
+//                                    .setError(jsInteraction.ERROR_USER_CANCELLED);
+//                        }
+//                    })
+//                    .show();
+//            return null;
+//        }
+//    };
+
+    private void selectPicFromCamera() {
+        Intent intent = new Intent(getActivity(), CameraActivity.class);
+        startActivityForResult(intent, ACTIVITY_REQUEST_TAKE_PHOTO);
+    }
 
 //    private JSInteraction.JsResolver locationResolver = new JSInteraction.JsResolver<Void>(false) {
 //        @Override
@@ -648,6 +742,25 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
             }
         });
 
+
+        //图片上传 - 用户选择
+        jsInteraction.addJsResolver(JSTaskTypes.UPLOADIMAGE, new JSResolverFactory() {
+            @Override
+            public JSInteraction.JsResolver create(int taskId) {
+//                uploadImageResolver = new JSInteraction.JsResolver<Void>(false) {
+//                    @Override
+//                    protected JSONObject onJsCall(Void args) {
+//                        selectImageAndUploadDirectly = true;
+//                        upload_image_type = UPLOAD_IMAGE_TYPE.USER_SELECT;
+//                        selectImageSource();
+//                        return null;
+//                    }
+//                };
+                return selectLocalFileResolver;
+            }
+        });
+
+
         //顶部显示隐藏
 //        jsInteraction.addJsResolver(JSTaskTypes.SET_TITLE_VISIBLE, new JSResolverFactory() {
 //            @Override
@@ -1045,10 +1158,15 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         webview.getSettings().setDatabaseEnabled(true);
         webview.getSettings().setAppCacheMaxSize(1024 * 1024 * 8);
         webview.getSettings().setAllowFileAccess(true);
-        webview.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        webview.getSettings().setAppCacheEnabled(false);
-        String appCachePath = getActivity().getCacheDir().getAbsolutePath();
-        webview.getSettings().setAppCachePath(appCachePath);
+//        webview.getSettings().setCacheMode(WebSettings.);
+//        webview.getSettings().setAppCacheEnabled(true);
+
+        if (PathUtils.getFileDirs() != null) {
+            String appCachePath = PathUtils.getFileDirs().getAbsolutePath();
+            webview.getSettings().setAppCachePath(appCachePath);
+        }
+
+
         /////
         webview.getSettings().setUseWideViewPort(true);
         webview.getSettings().setLoadWithOverviewMode(true);
@@ -1202,6 +1320,97 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         startActivityForResult(intent, ACTIVITY_REQUEST_SELECT_FILE);
     }
 
+    /**
+     * 根据图库图片uri发送图片
+     */
+    private String getLocalFile(Uri selectedImage) {
+        // String[] filePathColumn = { MediaStore.Images.Media.DATA };
+        Cursor cursor = getActivity().getContentResolver().query(selectedImage, null, null, null, null);
+        String st8 = getResources().getString(R.string.cant_find_pictures);
+
+        String filePath = null;
+
+        if (cursor != null) {
+            cursor.moveToFirst();
+            int columnIndex = cursor.getColumnIndex("_data");
+            filePath = cursor.getString(columnIndex);
+            cursor.close();
+        } else {
+            filePath = selectedImage.getPath();
+        }
+
+        if (filePath != null && !filePath.equals("null") && new File(filePath).exists()) {
+            return filePath;
+        } else {
+            Toast toast = Toast.makeText(getActivity(), st8, Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER, 0, 0);
+            toast.show();
+            return null;
+        }
+
+    }
+
+    private void upLoadFile(final String localFilePath, final boolean needDelete) {
+        if (selectLocalFileResolver.args == null) {
+            selectLocalFileResolver.setError(JSInteraction.ERROR_USER_CANCELLED);
+            return;
+        }
+
+
+        RequestParams params = new RequestParams();
+        try {
+            params.put(selectLocalFileResolver.args.getName(), new File(localFilePath));
+
+            for (Map.Entry<String, String> key : selectLocalFileResolver.args.getParams().entrySet()) {
+                params.add(key.getKey(), key.getValue());
+            }
+            OMSClientApplication.getHttpClient().post(selectLocalFileResolver.args.getPosturl(), params, new AsyncHttpResponseHandler() {
+
+                @Override
+                public void onStart() {
+                    super.onStart();
+                    backgroundRequests.showLoading(true, "正在上传");
+                }
+
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+
+                    JSONObject result = null;
+                    try {
+                        result = new JSONObject(new String(responseBody));
+                        selectLocalFileResolver.setResult(result);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        selectLocalFileResolver.setError(JSInteraction.ERROR_USER_CANCELLED);
+                    }
+                    backgroundRequests.showLoading(false, "");
+                    if (needDelete) {
+                        File file = new File(localFilePath);
+                        file.delete();
+                    }
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    selectLocalFileResolver.setError(JSInteraction.ERROR_USER_CANCELLED);
+                    backgroundRequests.showLoading(false, "");
+                    if (needDelete) {
+                        File file = new File(localFilePath);
+                        file.delete();
+                    }
+                }
+            });
+
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            selectLocalFileResolver.setError(JSInteraction.ERROR_USER_CANCELLED);
+        }
+
+//        OMSClientApplication.getHttpClient().post()
+
+
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -1209,6 +1418,30 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         //所以需要对jsResolver进行判空操作
         if (requestCode == ACTIVITY_REQUEST_NEW_LINK) {
 //            jsInteraction.onNewLinkClose();
+        } else if (requestCode == ACTIVITY_REQUEST_SELECT_IMAGE) {
+            if (data != null && data.getData() != null) {
+                Uri uri = data.getData();
+                String localFile = getLocalFile(uri);
+                if (localFile == null) {
+                    selectLocalFileResolver.setError(jsInteraction.ERROR_UNKOWN_ERROR);
+                } else {
+                    upLoadFile(localFile, false);
+//                    onFileSelect(localFile, false);
+                }
+            } else {
+                selectLocalFileResolver.setError(jsInteraction.ERROR_USER_CANCELLED);
+            }
+        } else if (requestCode == ACTIVITY_REQUEST_TAKE_PHOTO) {
+
+            // 设置文件保存路径
+            //上传，返回结果，删除临时文件
+            if (data != null) {
+                Bundle bundle = data.getExtras();
+                String path = bundle.getString("imgfilepath");
+                upLoadFile(path, true);
+            } else {
+                selectLocalFileResolver.setError(JSInteraction.ERROR_USER_CANCELLED);
+            }
         }
 //        else if (requestCode == ACTIVITY_REQUEST_TAKE_PHOTO && uploadImageResolver != null) {
 //
@@ -1366,7 +1599,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
 //
 //    }
 
-//    //拍照 或从gallery中选择图片后
+    //拍照 或从gallery中选择图片后
 //    private void onFileSelect(String path) {
 //        String savePath = Tools
 //                .getPicSaveFilePath(Config.getUniqueUserId(), "");

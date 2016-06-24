@@ -36,6 +36,7 @@ android {
             debuggable true
             signingConfig signingConfigs.release
             buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/app/omslogin.html"')
+//            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/jsapi/demo.html"')
             buildConfigField("String", "HOST", '"http://ptest.hecom.cn/omsmobile/app/"')
 //            buildConfigField("String", "NET_HOST", "\"http://123.56.17.239:8080/\"")
             buildConfigField("String", "NET_HOST", "\"http://mm.hecom.cn/\"")

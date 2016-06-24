@@ -16,4 +16,8 @@
     <color name="light_gray">#eeeeee</color>
     <color name="bg_white">#FFFFFFFF</color>
     <color name="light_black">#333333</color>
+    <color name="top_textColor_pressed">#7fffffff</color>
+    <color name="top_textColor_normal">#ffffffff</color>
+    <color name="black_transparent">#77000000</color>
+    <color name="half_black_transparent">#7f000000</color>
 </resources>
