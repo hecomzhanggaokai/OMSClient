@@ -33,7 +33,8 @@
             android:layout_toRightOf="@id/tv_back"
             android:paddingLeft="10dip"
             android:text="关闭"
-            android:textSize="14dp" />
+            android:textSize="14dp"
+            android:visibility="gone" />
 
         <TextView
             android:id="@+id/tv_title"
@@ -129,7 +130,7 @@
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
-        android:background="#123ed2"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:background="#123ed2" />
 
 </LinearLayout>

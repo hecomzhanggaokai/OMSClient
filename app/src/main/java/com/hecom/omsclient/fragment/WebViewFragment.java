@@ -51,6 +51,7 @@ import com.hecom.omsclient.js.entity.ParamPreviewImage;
 import com.hecom.omsclient.js.entity.ParamSetRight;
 import com.hecom.omsclient.js.entity.ParamSetTitle;
 import com.hecom.omsclient.js.entity.ParamText;
+import com.hecom.omsclient.js.entity.ParamTextLeft;
 import com.hecom.omsclient.js.entity.ParamUpload;
 import com.hecom.omsclient.utils.PathUtils;
 import com.hecom.omsclient.utils.Tools;
@@ -240,9 +241,9 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
     };
 
 
-    private JSInteraction.JSListener setLeftListener = new JSInteraction.JSListener<ParamText>() {
+    private JSInteraction.JSListener setLeftListener = new JSInteraction.JSListener<ParamTextLeft>() {
         @Override
-        protected void onJsCall(ParamText args) {
+        protected void onJsCall(ParamTextLeft args) {
             String text = args.getText();
             if (TextUtils.isEmpty(text)) {
                 tv_back.setText("返回");
@@ -250,6 +251,12 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
             } else {
                 tv_back.setText(text);
                 setRegister(true);
+            }
+
+            if (args.isVisible()) {
+                tv_back.setVisibility(View.VISIBLE);
+            } else {
+                tv_back.setVisibility(View.GONE);
             }
         }
 
