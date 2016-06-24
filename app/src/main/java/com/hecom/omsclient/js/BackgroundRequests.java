@@ -264,8 +264,8 @@ public class BackgroundRequests /*implements OnRequestSavedListener*/ {
                                         .setTitle(args.getTitle())
                                         .setCancelable(false)
                                         .setMessage(args.getMessage())
-                                        .setIcon(
-                                                android.R.drawable.ic_dialog_info)
+//                                        .setIcon(
+//                                                android.R.drawable.ic_dialog_info)
                                         .setView(editText)
                                         .setPositiveButton(
                                                 args.getButtonLabels()[1],

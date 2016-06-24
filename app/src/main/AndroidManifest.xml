@@ -77,6 +77,11 @@
 
         <service android:name=".services.DownLoadTarService" />
         <service android:name=".services.DownLoadAPKService" />
+
+        <activity
+            android:name=".activity.Main2Activity"
+            android:label="@string/title_activity_main2"
+            android:theme="@style/AppTheme"></activity>
     </application>
 
 </manifest>

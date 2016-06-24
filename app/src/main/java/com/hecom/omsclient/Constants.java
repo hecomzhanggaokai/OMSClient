@@ -13,4 +13,8 @@ public class Constants {
     public static final String TARNAME = "clienthttp.tar";
 
     public static final String CHECKURL = "http://ptest.hecom.cn/oms4/apiLogin/version";
+
+    public static final String CHECKSPLASHIMGURL = BuildConfig.NET_HOST+"mobile-0.0.1-SNAPSHOT/downlinkdata/downlink.do";
+
+    public static final String SPLASH_IMAGE_LAST_UPDATETIME = "splash_image_last_updatetime";
 }

@@ -129,6 +129,7 @@
     <WebView
         android:id="@+id/webview"
         android:layout_width="match_parent"
+        android:background="#123ed2"
         android:layout_height="match_parent" />
 
 </LinearLayout>

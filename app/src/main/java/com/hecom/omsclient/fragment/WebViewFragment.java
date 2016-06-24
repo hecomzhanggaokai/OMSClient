@@ -98,6 +98,8 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
 
     private final static int ACTIVITY_REQUEST_COMMON_RECENT = 0x9;
 
+    private final static int ACTIVITY_REQUEST_SELECT_FILE = 0x10;
+
     private final static String TAG = WebViewFragment.class.getSimpleName();
 
     //计算总共开了多少个页面,当关掉所有页面时，检查是否替换插件更新
@@ -1047,6 +1049,9 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         webview.getSettings().setAppCacheEnabled(false);
         String appCachePath = getActivity().getCacheDir().getAbsolutePath();
         webview.getSettings().setAppCachePath(appCachePath);
+        /////
+        webview.getSettings().setUseWideViewPort(true);
+        webview.getSettings().setLoadWithOverviewMode(true);
 
 //		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT ) {
 //			webview.getSettings().setLoadsImagesAutomatically(true);
@@ -1186,6 +1191,17 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         }
         startActivityForResult(intent, ACTIVITY_REQUEST_SELECT_IMAGE);
     }
+
+    /**
+     * 选择文件
+     */
+    private void selectFileFromLocal() {
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("*/*");
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        startActivityForResult(intent, ACTIVITY_REQUEST_SELECT_FILE);
+    }
+
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

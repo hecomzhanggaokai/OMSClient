@@ -45,7 +45,7 @@ public class DownLoadTarService extends IntentService {
         //是否需要下载tar
         RequestParams params = new RequestParams();
 //        params
-        OMSClientApplication.getSyncHttpClient().post(Constants.CHECKURL, params,new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
+        OMSClientApplication.getSyncHttpClient().post(Constants.CHECKURL, params, new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, final UpdateInfoEntity response) {
                 if (!response.isSuccess()) {
@@ -53,6 +53,13 @@ public class DownLoadTarService extends IntentService {
                     return;
                 }
                 if (response.getData().isTarNeedDownLoad()) {
+                    //如果tar包也需要升级的话,首先删除旧的tar
+                    if (Tools.isTarExists()) {
+                        HLog.i(TAG, "发现tar包新版本,删除老版本,防止从老版本中加载资源");
+                        File file = PathUtils.getFileDirs();
+                        File tarFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
+                        tarFile.delete();
+                    }
                     OMSClientApplication.getSyncHttpClient().get(response.getData().getHtml_dlurl(), new FileAsyncHttpResponseHandler(DownLoadTarService.this) {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {

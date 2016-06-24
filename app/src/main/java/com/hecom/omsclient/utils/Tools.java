@@ -146,7 +146,7 @@ public class Tools {
                         }
                     }
                     from.delete();
-                    HLog.i("Tools","删除缓存文件");
+                    HLog.i("Tools", "删除缓存文件");
                 }
             }
         }).start();
@@ -231,12 +231,48 @@ public class Tools {
         return var1;
     }
 
-
-    public static boolean isSplashImgExists() {
-        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
-        if (TextUtils.isEmpty(localSplashImgUrl)) {
+    public static boolean isSplashImgNeedDownLoad(String md5){
+        File file = PathUtils.getFileDirs();
+        if (file == null) {
             return false;
         }
+        if(isSplashImgExists()){
+            File splashFile = new File(file.getAbsolutePath() + File.separator + Constants.SPLASHIMGNAME);
+            return !isLocalAndServerMd5Same(md5,splashFile);
+        }
+        return false;
+    }
+
+
+
+    /**
+     * 比较本地图片文件与服务端获得的md5是否一致
+     */
+    private static boolean isLocalAndServerMd5Same(String serverStr, File localFilePath) {
+        String local_Md5 = "";
+        try {
+            local_Md5 = Tools.getMd5ByFile(localFilePath.toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (TextUtils.isEmpty(local_Md5) || TextUtils.isEmpty(serverStr)) {
+            return false;
+        } else {
+            if (local_Md5.equalsIgnoreCase(serverStr)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+    }
+
+
+
+    public static boolean isSplashImgExists() {
+//        String localSplashImgUrl = SharedPreferencesUtils.get(Constants.SPLASHURLKEY);
+//        if (TextUtils.isEmpty(localSplashImgUrl)) {
+//            return false;
+//        }
         File file = PathUtils.getFileDirs();
         if (file == null) {
             return false;
@@ -340,38 +376,40 @@ public class Tools {
 
 
     //
-//	/**
-//	 * 获取本地文件的md5值
-//	 *
-//	 * @param filePath
-//	 * @return
-//	 * @throws FileNotFoundException
-//	 */
-//	public static String getMd5ByFile(String filePath) throws FileNotFoundException {
-//		String value = null;
-//		File file = new File(filePath);
-//		FileInputStream in = new FileInputStream(file);
-//		try {
-//			MappedByteBuffer byteBuffer = in.getChannel().map(FileChannel.MapMode.READ_ONLY, 0,
-//					file.length());
-//			MessageDigest md5 = MessageDigest.getInstance("MD5");
-//			md5.update(byteBuffer);
-//			BigInteger bi = new BigInteger(1, md5.digest());
-//			value = bi.toString(16);
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			if (null != in) {
-//				try {
-//					in.close();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		}
-//		return value;
-//	}
-//
+
+    /**
+     * 获取本地文件的md5值
+     *
+     * @param filePath
+     * @return
+     * @throws FileNotFoundException
+     */
+    public static String getMd5ByFile(String filePath) throws FileNotFoundException {
+        String value = null;
+        File file = new File(filePath);
+        FileInputStream in = new FileInputStream(file);
+        try {
+            MappedByteBuffer byteBuffer = in.getChannel().map(FileChannel.MapMode.READ_ONLY, 0,
+                    file.length());
+            MessageDigest md5 = MessageDigest.getInstance("MD5");
+            md5.update(byteBuffer);
+            BigInteger bi = new BigInteger(1, md5.digest());
+            value = bi.toString(16);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (null != in) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return value;
+    }
+
+    //
 //	/**
 //	 * 获得账号. 获取要提交的设备号 3.0用户返回deviceID 4.0用户返回账户
 //	 *
@@ -1359,24 +1397,45 @@ public class Tools {
 //		return true;
 //	}
 //
-//	/**
-//	 * 获取程序包名
-//	 *
-//	 * @param cx
-//	 * @return 程序包名
-//	 */
-//	public static String getPackageName(Context cx) {
-//		String packageName = ""; // 初始化
-//		PackageManager packageManager = cx.getApplicationContext().getPackageManager();
-//		try {
-//			PackageInfo packageInfo = packageManager.getPackageInfo(cx.getPackageName(), 0);
-//			packageName = packageInfo.packageName;
-//		} catch (NameNotFoundException e) {
-//			e.printStackTrace();
-//			return "";
-//		}
-//		return packageName;
-//	}
+
+    /**
+     * 获取程序包名
+     *
+     * @param cx
+     * @return 程序包名
+     */
+    public static String getPackageName(Context cx) {
+        String packageName = ""; // 初始化
+        PackageManager packageManager = cx.getApplicationContext().getPackageManager();
+        try {
+            PackageInfo packageInfo = packageManager.getPackageInfo(cx.getPackageName(), 0);
+            packageName = packageInfo.packageName;
+        } catch (NameNotFoundException e) {
+            e.printStackTrace();
+            return "";
+        }
+        return packageName;
+    }
+
+    public static boolean isNetworkAvailable(Context context) {
+        ConnectivityManager connectivity = (ConnectivityManager) context
+                .getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (connectivity == null) {
+            return false;
+        } else {
+            NetworkInfo info = connectivity.getActiveNetworkInfo();
+            if (info == null) {
+                return false;
+            } else {
+                if (info.isAvailable()) {
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
+
 //
 //	/**
 //	 * 判断APK是否注册某项权限
