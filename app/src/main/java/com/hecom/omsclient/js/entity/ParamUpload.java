@@ -12,7 +12,7 @@ import java.util.Map;
 public class ParamUpload extends ParamBase {
     private String posturl;
     private String name;
-    private Map<String,String> params;
+    private Map<String, String> params;
 
     public String getPosturl() {
         return posturl;
@@ -40,6 +40,19 @@ public class ParamUpload extends ParamBase {
 
     @Override
     public boolean isValid() {
+//        if (params == null) {
+//            return false;
+//        }
+//        if (params.isEmpty()) {
+//            return false;
+//
+//        }
+        if (TextUtils.isEmpty(posturl)) {
+            return false;
+        }
+        if (TextUtils.isEmpty(name)) {
+            return false;
+        }
         return true;
     }
 }

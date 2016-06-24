@@ -66,7 +66,7 @@ public class DownLoadAPKService extends IntentService {
             public void onSuccess(int statusCode, Header[] headers, File response) {
                 File file = PathUtils.getFileDirs();
                 if (file != null) {
-                    final File tarLocalFile = new File(file.getAbsolutePath() + File.separator + response.getName());
+                    final File tarLocalFile = new File(file.getAbsolutePath() + File.separator + "OMSClient.apk");
 //                    response.renameTo(tarLocalFile);
                     Tools.moveFile(response, tarLocalFile, new Tools.moveFile() {
                         @Override

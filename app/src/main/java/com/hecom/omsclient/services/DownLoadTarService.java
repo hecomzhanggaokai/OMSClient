@@ -6,6 +6,7 @@ import android.text.TextUtils;
 
 import com.google.gson.Gson;
 import com.hecom.log.HLog;
+import com.hecom.omsclient.BuildConfig;
 import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.application.OMSClientApplication;
 import com.hecom.omsclient.entity.UpdateInfoEntity;
@@ -45,7 +46,7 @@ public class DownLoadTarService extends IntentService {
         //是否需要下载tar
         RequestParams params = new RequestParams();
 //        params
-        OMSClientApplication.getSyncHttpClient().post(Constants.CHECKURL, params, new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
+        OMSClientApplication.getSyncHttpClient().post(BuildConfig.CKECK_URL, params, new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, final UpdateInfoEntity response) {
                 if (!response.isSuccess()) {
@@ -98,12 +99,12 @@ public class DownLoadTarService extends IntentService {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, UpdateInfoEntity errorResponse) {
-
+                HLog.e("WebViewDemoActivity", "检查tar更新的时候,发生错误");
             }
 
             @Override
             protected UpdateInfoEntity parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
-                if (rawJsonData == null) {
+                if (rawJsonData == null || isFailure) {
                     return null;
                 }
                 Gson gson = new Gson();

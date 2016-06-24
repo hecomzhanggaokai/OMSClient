@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.hecom.log.HLog;
+import com.hecom.omsclient.BuildConfig;
 import com.hecom.omsclient.Constants;
 import com.hecom.omsclient.R;
 import com.hecom.omsclient.application.OMSClientApplication;
@@ -56,7 +57,7 @@ public class WebViewDemoActivity extends FragmentActivity {
         webViewFragment.setArguments(bundle);
         getSupportFragmentManager().beginTransaction().replace(R.id.webViewContainer, webViewFragment).commit();
         //免的app被强杀之后再次提示更新
-        if (savedInstanceState == null&&!isFromOpenLink) {
+        if (savedInstanceState == null && !isFromOpenLink) {
             checkApkVersion();
         }
     }
@@ -89,7 +90,7 @@ public class WebViewDemoActivity extends FragmentActivity {
 
     private void checkApkVersion() {
         RequestParams params = new RequestParams();
-        OMSClientApplication.getHttpClient().post(Constants.CHECKURL, params, new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
+        OMSClientApplication.getHttpClient().post(BuildConfig.CKECK_URL, params, new BaseJsonHttpResponseHandler<UpdateInfoEntity>() {
             @Override
             public void onSuccess(int statusCode, Header[] headers, String rawJsonResponse, final UpdateInfoEntity response) {
                 if (!response.isSuccess()) {
@@ -103,12 +104,12 @@ public class WebViewDemoActivity extends FragmentActivity {
 
             @Override
             public void onFailure(int statusCode, Header[] headers, Throwable throwable, String rawJsonData, UpdateInfoEntity errorResponse) {
-                HLog.e("WebViewDemoActivity", "数据请求发生错误");
+                HLog.e("WebViewDemoActivity", "检查版本更新的时候,发生错误");
             }
 
             @Override
             protected UpdateInfoEntity parseResponse(String rawJsonData, boolean isFailure) throws Throwable {
-                if (rawJsonData == null) {
+                if (rawJsonData == null || isFailure) {
                     return null;
                 }
                 Gson gson = new Gson();
@@ -119,7 +120,7 @@ public class WebViewDemoActivity extends FragmentActivity {
 
     private void popUpdateActivity(String apkurl) {
         Intent intent = new Intent();
-        intent.putExtra("url",apkurl);
+        intent.putExtra("url", apkurl);
         intent.setClass(this, UpdateActivity.class);
         startActivity(intent);
 

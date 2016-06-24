@@ -29,6 +29,7 @@ android {
             buildConfigField("String", "BASEURL", '"http://dingtalk.hecom.cn/oms/omslogin.html"')
             buildConfigField("String", "HOST", '"http://dingtalk.hecom.cn/oms/"')
             buildConfigField("String", "NET_HOST", "\"http://mm.hecom.cn/\"")
+            buildConfigField("String", "CKECK_URL", "\"http://oms.hecom.cn/apiLogin/version\"")
 
 
         }
@@ -40,6 +41,7 @@ android {
             buildConfigField("String", "HOST", '"http://ptest.hecom.cn/omsmobile/app/"')
 //            buildConfigField("String", "NET_HOST", "\"http://123.56.17.239:8080/\"")
             buildConfigField("String", "NET_HOST", "\"http://mm.hecom.cn/\"")
+            buildConfigField("String", "CKECK_URL", "\"http://ptest.hecom.cn/oms4/apiLogin/version\"")
 
         }
     }
