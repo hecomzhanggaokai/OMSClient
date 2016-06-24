@@ -46,6 +46,17 @@ public class SplashActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        //防止按了MENU，重新走splash的bug,参考：http://stackoverflow.com/questions/19545889/app-restarts-rather-than-resumes
+        if (!isTaskRoot()
+                && getIntent().hasCategory(Intent.CATEGORY_LAUNCHER)
+                && getIntent().getAction() != null
+                && getIntent().getAction().equals(Intent.ACTION_MAIN)) {
+
+            finish();
+            return;
+        }
+
         setContentView(R.layout.activity_splash);
 //        try {
 //            Thread.sleep(4000);
