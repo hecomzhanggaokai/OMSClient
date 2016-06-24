@@ -20,10 +20,10 @@ import com.hecom.omsclient.R;
 import com.hecom.omsclient.application.OMSClientApplication;
 import com.hecom.omsclient.entity.UpdateInfoEntity;
 import com.hecom.omsclient.services.DownLoadTarService;
+import com.hecom.omsclient.utils.DeviceInfo;
 import com.hecom.omsclient.utils.PathUtils;
 import com.hecom.omsclient.utils.SharedPreferencesUtils;
 import com.hecom.omsclient.utils.Tools;
-import com.hecom.utils.DeviceInfo;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -181,7 +181,7 @@ public class SplashActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                            HLog.e(TAG,statusCode+"--");
+                            HLog.e(TAG, statusCode + "--");
                         }
 
 //                 @Override
