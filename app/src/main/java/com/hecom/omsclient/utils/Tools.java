@@ -239,8 +239,9 @@ public class Tools {
         if(isSplashImgExists()){
             File splashFile = new File(file.getAbsolutePath() + File.separator + Constants.SPLASHIMGNAME);
             return !isLocalAndServerMd5Same(md5,splashFile);
+        } else {
+            return true;
         }
-        return false;
     }
 
 

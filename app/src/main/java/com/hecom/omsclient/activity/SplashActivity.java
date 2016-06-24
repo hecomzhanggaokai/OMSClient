@@ -23,6 +23,7 @@ import com.hecom.omsclient.services.DownLoadTarService;
 import com.hecom.omsclient.utils.PathUtils;
 import com.hecom.omsclient.utils.SharedPreferencesUtils;
 import com.hecom.omsclient.utils.Tools;
+import com.hecom.utils.DeviceInfo;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.BaseJsonHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
@@ -76,7 +77,7 @@ public class SplashActivity extends AppCompatActivity {
                     String lastUpdateTime = SharedPreferencesUtils.get(Constants.SPLASH_IMAGE_LAST_UPDATETIME);
                     json.put("lastUpdateTime", lastUpdateTime);
                     json.put("packageName", Tools.getPackageName(SplashActivity.this));
-//            json.put(SplashUtils.JSON_DEVICEID, DeviceInfo.getDeviceId(this));
+                    json.put("deviceId", DeviceInfo.getDeviceId(SplashActivity.this));
                     json.put("type", "welcomePic");
                     HLog.i(TAG, "V40 Login Json:" + json.toString());
                 } catch (JSONException e) {
@@ -94,6 +95,7 @@ public class SplashActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                             String obj = new String(responseBody);
+                            HLog.d(TAG,obj+"=====");
                             if (!TextUtils.isEmpty(obj)) {
                                 HLog.i("SplashActivity", obj);
                                 String lastUpdateTime = "";
@@ -136,24 +138,24 @@ public class SplashActivity extends AppCompatActivity {
                                             OMSClientApplication.getSyncHttpClient().get(picPath, new FileAsyncHttpResponseHandler(SplashActivity.this) {
                                                 @Override
                                                 public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
-                                                    HLog.e("DownLoadTarService", "更新tar包失败,网络原因");
+                                                    HLog.e("DownLoadTarService", "更新splashimage失败,网络原因");
                                                 }
 
                                                 @Override
                                                 public void onSuccess(int statusCode, Header[] headers, File cachedFile) {
                                                     File file = PathUtils.getFileDirs();
                                                     if (file != null) {
-                                                        File tarLocalFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
+                                                        File tarLocalFile = new File(file.getAbsolutePath() + File.separator + Constants.SPLASHIMGNAME);
                                                         Tools.moveFile(cachedFile, tarLocalFile, new Tools.moveFile() {
                                                             @Override
                                                             public void success() {
-                                                                HLog.i("DownLoadTarService", "更新tar包成功");
+                                                                HLog.e("DownLoadTarService", "更新splashimage成功");
                                                                 SharedPreferencesUtils.set(Constants.SPLASH_IMAGE_LAST_UPDATETIME, lastUpdateTimeTmp);
                                                             }
 
                                                             @Override
                                                             public void failed() {
-                                                                HLog.e("DownLoadTarService", "更新tar包失败,已经成功下载,复制的时候出错");
+                                                                HLog.e("DownLoadTarService", "更新splashimage失败,已经成功下载,复制的时候出错");
                                                             }
                                                         });
                                                     }
@@ -179,7 +181,7 @@ public class SplashActivity extends AppCompatActivity {
 
                         @Override
                         public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-
+                            HLog.e(TAG,statusCode+"--");
                         }
 
 //                 @Override
