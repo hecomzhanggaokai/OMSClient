@@ -61,7 +61,7 @@ public class DownLoadTarService extends IntentService {
                         File tarFile = new File(file.getAbsolutePath() + File.separator + Constants.TARNAME);
                         tarFile.delete();
                     }
-                    OMSClientApplication.getSyncHttpClient().get(response.getData().getHtml_dlurl(), new FileAsyncHttpResponseHandler(DownLoadTarService.this) {
+                    OMSClientApplication.getSyncHttpClient().post(response.getData().getHtml_dlurl(), new FileAsyncHttpResponseHandler(DownLoadTarService.this) {
                         @Override
                         public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
                             HLog.e("DownLoadTarService", "更新tar包失败,网络原因");

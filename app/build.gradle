@@ -26,18 +26,18 @@ android {
             shrinkResources true
             signingConfig signingConfigs.release
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-project.txt'
-            buildConfigField("String", "BASEURL", '"http://dingtalk.hecom.cn/oms/omslogin.html"')
-            buildConfigField("String", "HOST", '"http://dingtalk.hecom.cn/oms/"')
+            buildConfigField("String", "BASEURL", '"https://dingtalk.hecom.cn/oms/omslogin.html"')
+            buildConfigField("String", "HOST", '"https://dingtalk.hecom.cn/oms/"')
             buildConfigField("String", "NET_HOST", "\"http://mm.hecom.cn/\"")
-            buildConfigField("String", "CKECK_URL", "\"http://oms.hecom.cn/apiLogin/version\"")
+            buildConfigField("String", "CKECK_URL", "\"https://oms.hecom.cn/apiLogin/version\"")
 
 
         }
         debug {
             debuggable true
             signingConfig signingConfigs.release
-//            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/app/omslogin.html"')
-            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/jsapi/demo.html"')
+            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/app/omslogin.html"')
+//            buildConfigField("String", "BASEURL", '"http://ptest.hecom.cn/omsmobile/jsapi/demo.html"')
             buildConfigField("String", "HOST", '"http://ptest.hecom.cn/omsmobile/app/"')
 //            buildConfigField("String", "NET_HOST", "\"http://123.56.17.239:8080/\"")
 //            buildConfigField("String", "NET_HOST", "\"http://123.56.17.239:8080/\"")
