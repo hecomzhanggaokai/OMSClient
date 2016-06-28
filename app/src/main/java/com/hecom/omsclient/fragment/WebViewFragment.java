@@ -1171,12 +1171,12 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         webview.getSettings().setAllowFileAccess(true);
         webview.setVerticalScrollBarEnabled(false);
         //禁止弹出是否记住密码 参考http://stackoverflow.com/questions/11531778/how-to-disable-the-save-password-dialog-on-an-android-webview
-        if (Build.VERSION.SDK_INT <= 18) {
+//        if (Build.VERSION.SDK_INT <= 18) {
             webview.getSettings().setSavePassword(false);
-        } else {
-        // do nothing. because as google mentioned in the documentation -
-        // "Saving passwords in WebView will not be supported in future versions"
-        }
+//        } else {
+//        // do nothing. because as google mentioned in the documentation -
+//        // "Saving passwords in WebView will not be supported in future versions"
+//        }
 
 //        webview.getSettings().setCacheMode(WebSettings.);
 //        webview.getSettings().setAppCacheEnabled(true);
