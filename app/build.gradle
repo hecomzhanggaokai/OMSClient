@@ -50,7 +50,7 @@ android {
     }
 
     productFlavors {
-        dev { minSdkVersion 21 }
+//        dev { minSdkVersion 21 }
     }
 
     applicationVariants.all { variant ->
