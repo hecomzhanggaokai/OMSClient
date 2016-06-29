@@ -102,7 +102,7 @@ public class DownLoadAPKService extends IntentService {
                 }
                 int current = (int) ((bytesWritten / (totalSize + 0f)) * 100);
                 if ((current - lastPercent > 4) && current > 0 && current <= 100) {
-                    updateNotification("下载更新", "正在下载" + current + "%", null);
+                    updateNotification("OMS下载更新", "正在下载" + current + "%", null);
                     lastPercent = current;
                 }
             }
@@ -129,7 +129,7 @@ public class DownLoadAPKService extends IntentService {
         mBuilder.setContentTitle(title);
         mBuilder.setContentText(text);
         mBuilder.setAutoCancel(true);
-        mBuilder.setSmallIcon(R.drawable.icon);
+        mBuilder.setSmallIcon(R.drawable.app_icon);
         if (pintent != null) {
             mBuilder.setContentIntent(pintent);
         }
