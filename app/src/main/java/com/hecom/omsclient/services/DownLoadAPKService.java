@@ -97,6 +97,9 @@ public class DownLoadAPKService extends IntentService {
             @Override
             public void onProgress(long bytesWritten, long totalSize) {
                 super.onProgress(bytesWritten, totalSize);
+                if (totalSize == 0) {
+                    return;
+                }
                 int current = (int) ((bytesWritten / (totalSize + 0f)) * 100);
                 if ((current - lastPercent > 4) && current > 0 && current <= 100) {
                     updateNotification("下载更新", "正在下载" + current + "%", null);
