@@ -19,6 +19,7 @@ import org.json.JSONObject;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -298,10 +299,17 @@ public class JSInteraction {
 //        }
 
         if (!TextUtils.isEmpty(taskType) && mFactorys.containsKey(taskType)) {
-
+            //需要删除的keys
+            List<Integer> needsRemove = new ArrayList<>();
             //先检查有没有没完成且相同的taskType,如果有，此次请求失败
             for (Map.Entry<Integer, JsResolver> entry : mAsyncWorks.entrySet()) {
                 if (entry.getValue().taskType.equals(taskType)) {
+                    //alert confirm不过滤
+                    if (JSTaskTypes.ALERT.equals(taskType) || JSTaskTypes.CONFIRM.equals(taskType)) {
+                        needsRemove.add(entry.getKey());
+                        continue;
+                    }
+
                     sendBackResult2Js(taskId, false, ERROR_CALL_BEFORE_RETURN, null);
                     return;
                 }
@@ -319,6 +327,10 @@ public class JSInteraction {
             } else {
                 resolver.taskType = taskType;
                 resolver.jsInteraction = this;
+                //删除多余的alert confirm
+                for (int key : needsRemove) {
+                    mAsyncWorks.remove(key);
+                }
                 mAsyncWorks.put(taskId, resolver);
                 resolver.onCall(args);
             }
