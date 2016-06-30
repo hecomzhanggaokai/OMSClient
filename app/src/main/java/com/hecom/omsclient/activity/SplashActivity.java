@@ -160,7 +160,7 @@ public class SplashActivity extends AppCompatActivity {
                                                         Tools.moveFile(cachedFile, tarLocalFile, new Tools.moveFile() {
                                                             @Override
                                                             public void success() {
-                                                                HLog.e("DownLoadTarService", "更新splashimage成功");
+                                                                HLog.i("DownLoadTarService", "更新splashimage成功");
                                                                 SharedPreferencesUtils.set(Constants.SPLASH_IMAGE_LAST_UPDATETIME, lastUpdateTimeTmp);
                                                             }
 
