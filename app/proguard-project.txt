@@ -292,3 +292,10 @@
 -keep class com.hecom.messages.**{*;}
 -keep class com.hecom.DataCenter.DataModel.**{*;}
 -keep class com.hecom.userdefined.uphelper.**{*;}
+
+#growingIO
+-keep class com.growingio.android.sdk.**{
+  public *;
+}
+-dontwarn com.growingio.android.sdk.**
+

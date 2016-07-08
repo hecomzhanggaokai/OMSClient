@@ -36,6 +36,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.hecom.omsclient.BuildConfig;
 import com.hecom.omsclient.R;
 import com.hecom.omsclient.activity.PhotoViewerActivity;
@@ -1146,7 +1147,9 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         icon_right1.setOnClickListener(this);
         icon_right2.setOnClickListener(this);
         right_text.setOnClickListener(this);
-        webview.setWebChromeClient(new WebChromeClient() {
+
+
+        GrowingIO.trackWebView(webview, new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress) {
                 pb_loading.setVisibility(View.VISIBLE);
                 pb_loading.setProgress(progress);
@@ -1155,6 +1158,8 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
                 }
             }
         });
+
+//        webview.setWebChromeClient();
 
         if (mTransparent) {
             webview.setBackgroundColor(0);

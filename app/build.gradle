@@ -69,4 +69,5 @@ dependencies {
     compile 'com.google.code.gson:gson:2.3'
     compile 'com.loopj.android:android-async-http:1.4.9'
     compile 'com.android.support:design:23.2.1'
+    compile 'com.growingio.android:vds-android:latest.release@aar'
 }
