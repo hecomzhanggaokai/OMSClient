@@ -22,7 +22,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="新版本来了,现在更新?"
+                android:text="发现新版本，现在更新！"
                 android:textColor="@color/light_black"
                 android:textSize="15sp" />
 

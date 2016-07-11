@@ -102,7 +102,7 @@ public class DownLoadAPKService extends IntentService {
                 }
                 int current = (int) ((bytesWritten / (totalSize + 0f)) * 100);
                 if ((current - lastPercent > 4) && current > 0 && current <= 100) {
-                    updateNotification("OMS下载更新", "正在下载" + current + "%", null);
+                    updateNotification("红圈CRM下载更新", "正在下载" + current + "%", null);
                     lastPercent = current;
                 }
             }

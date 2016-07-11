@@ -27,6 +27,7 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.reflect.TypeToken;
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.hecom.omsclient.R;
 import com.hecom.omsclient.application.OMSClientApplication;
 import com.hecom.omsclient.js.entity.BDPointInfo;
@@ -36,6 +37,7 @@ import com.hecom.omsclient.js.entity.ParamAlert;
 import com.hecom.omsclient.js.entity.ParamConfirm;
 import com.hecom.omsclient.js.entity.ParamLocalStorage;
 import com.hecom.omsclient.js.entity.ParamLocalStorageGet;
+import com.hecom.omsclient.js.entity.ParamMonitorOnline;
 import com.hecom.omsclient.js.entity.ParamPreloader;
 import com.hecom.omsclient.js.entity.ParamText;
 import com.hecom.omsclient.js.entity.ParamTimeFormat;
@@ -80,7 +82,7 @@ public class BackgroundRequests /*implements OnRequestSavedListener*/ {
     public void bind(JSInteraction interaction) {
         this.jsInteraction = interaction;
 
-    //localstorage set
+        //localstorage set
         jsInteraction.addJsResolver(JSTaskTypes.LOCALSTORAGESETITEM, new JSResolverFactory() {
             @Override
             public JSInteraction.JsResolver create(int taskId) {
@@ -93,7 +95,7 @@ public class BackgroundRequests /*implements OnRequestSavedListener*/ {
                 };
             }
         });
-    //localstorage get
+        //localstorage get
         jsInteraction.addJsResolver(JSTaskTypes.LOCALSTORAGEGETITEM, new JSResolverFactory() {
             @Override
             public JSInteraction.JsResolver create(int taskId) {
@@ -114,7 +116,7 @@ public class BackgroundRequests /*implements OnRequestSavedListener*/ {
             }
         });
 
-    //localstorage removeitem
+        //localstorage removeitem
         jsInteraction.addJsResolver(JSTaskTypes.LOCALSTORAGEREMOVEITEM, new JSResolverFactory() {
             @Override
             public JSInteraction.JsResolver create(int taskId) {
@@ -128,7 +130,7 @@ public class BackgroundRequests /*implements OnRequestSavedListener*/ {
             }
         });
 
-    //localstorage clear
+        //localstorage clear
         jsInteraction.addJsResolver(JSTaskTypes.LOCALSTORAGECLEAR, new JSResolverFactory() {
             @Override
             public JSInteraction.JsResolver create(int taskId) {
@@ -1265,6 +1267,41 @@ public class BackgroundRequests /*implements OnRequestSavedListener*/ {
 //            }
 //        });
 
+        //GlowingIO monitor
+        jsInteraction.addJsResolver(JSTaskTypes.MONITORONLINE, new JSResolverFactory() {
+            @Override
+            public JSInteraction.JsResolver create(int taskId) {
+                return new JSInteraction.JsResolver<ParamMonitorOnline>(true) {
+                    @Override
+                    protected JSONObject onJsCall(ParamMonitorOnline args) {
+                        GrowingIO growingIO = GrowingIO.getInstance();
+                        growingIO.setCS1("account", args.getParams().getAccount());
+                        growingIO.setCS2("ent_code", args.getParams().getEnt_code());
+                        growingIO.setCS3("user_name", args.getParams().getUser_name());
+                        growingIO.setCS4("ent_name", args.getParams().getEnt_name());
+                        return null;
+                    }
+                };
+            }
+        });
+
+        //GlowingIO monitor
+        jsInteraction.addJsResolver(JSTaskTypes.MONITOROFFLINE, new JSResolverFactory() {
+            @Override
+            public JSInteraction.JsResolver create(int taskId) {
+                return new JSInteraction.JsResolver<ParamMonitorOnline>(true) {
+                    @Override
+                    protected JSONObject onJsCall(ParamMonitorOnline args) {
+                        GrowingIO growingIO = GrowingIO.getInstance();
+                        growingIO.setCS1("account", args.getParams().getAccount());
+//                        growingIO.setCS2("ent_code", args.getParams().getEnt_code());
+//                        growingIO.setCS3("user_name", args.getParams().getUser_name());
+//                        growingIO.setCS4("ent_name", args.getParams().getEnt_name());
+                        return null;
+                    }
+                };
+            }
+        });
     }
 
     /**

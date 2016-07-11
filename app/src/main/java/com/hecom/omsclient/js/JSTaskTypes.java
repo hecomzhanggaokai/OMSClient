@@ -131,4 +131,9 @@ public class JSTaskTypes {
     public static final String LOCALSTORAGEREMOVEITEM = "util.localStorage.removeItem";
     //清空全部数据
     public static final String LOCALSTORAGECLEAR = "util.localStorage.clear";
+    //    GrowingIO在线监控统计
+    //登录统计
+    public static final String MONITORONLINE = "biz.monitor.online";
+    //登出统计
+    public static final String MONITOROFFLINE = "biz.monitor.offline";
 }
