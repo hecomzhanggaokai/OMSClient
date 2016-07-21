@@ -24,6 +24,9 @@ import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
+import cz.msebera.android.httpclient.conn.ssl.AllowAllHostnameVerifier;
+import cz.msebera.android.httpclient.conn.ssl.SSLSocketFactory;
+
 /**
  * Created by zhanggaokai on 16/6/12.
  */
@@ -60,6 +63,7 @@ public class OMSClientApplication extends Application {
                 .defaultDisplayImageOptions(new DisplayImageOptions.Builder().considerExifParams(true).build()) //是否考虑JPEG图像EXIF参数（旋转，翻转）
                 .build();
         mImageLoader.init(config);
+
     }
 
 
@@ -90,6 +94,12 @@ public class OMSClientApplication extends Application {
             syncHttpClient = new SyncHttpClient();
             syncHttpClient.setMaxRetriesAndTimeout(3, 300000);
         }
+        return syncHttpClient;
+    }
+
+    public static SyncHttpClient getSyncHttpClientHttps() {
+        SyncHttpClient syncHttpClient = new SyncHttpClient(true, 80, 443);
+        syncHttpClient.setMaxRetriesAndTimeout(3, 300000);
         return syncHttpClient;
     }
 

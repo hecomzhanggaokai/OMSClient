@@ -136,4 +136,8 @@ public class JSTaskTypes {
     public static final String MONITORONLINE = "biz.monitor.online";
     //登出统计
     public static final String MONITOROFFLINE = "biz.monitor.offline";
+    //保存图片到本地
+    public static final String SAVEIMAGE = "biz.util.saveImage";
+    //文本拷贝到系统剪切板
+    public static final String COPY = "biz.clipboard.copy";
 }

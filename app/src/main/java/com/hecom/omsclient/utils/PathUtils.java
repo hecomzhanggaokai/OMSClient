@@ -44,4 +44,18 @@ public class PathUtils {
 //        return null;
 
     }
+
+    public static File getPublicPics() {
+
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState()) || !Environment.isExternalStorageRemovable()) {
+            File result = new File(Environment.getExternalStorageDirectory(), "hecomdownload");
+            if (!result.exists()) {
+                result.mkdirs();
+            }
+            return result;
+        }
+        return null;
+    }
+
+
 }

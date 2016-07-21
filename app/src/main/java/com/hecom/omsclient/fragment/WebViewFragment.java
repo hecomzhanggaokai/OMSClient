@@ -2,10 +2,13 @@ package com.hecom.omsclient.fragment;
 
 import android.annotation.SuppressLint;
 import android.app.AlertDialog;
+import android.app.PendingIntent;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -37,6 +40,7 @@ import android.widget.Toast;
 
 
 import com.growingio.android.sdk.collection.GrowingIO;
+import com.hecom.log.HLog;
 import com.hecom.omsclient.BuildConfig;
 import com.hecom.omsclient.R;
 import com.hecom.omsclient.activity.PhotoViewerActivity;
@@ -47,9 +51,11 @@ import com.hecom.omsclient.js.BackgroundRequests;
 import com.hecom.omsclient.js.JSInteraction;
 import com.hecom.omsclient.js.JSResolverFactory;
 import com.hecom.omsclient.js.JSTaskTypes;
+import com.hecom.omsclient.js.entity.ParamClipBoard;
 import com.hecom.omsclient.js.entity.ParamCreateChat;
 import com.hecom.omsclient.js.entity.ParamOpenLink;
 import com.hecom.omsclient.js.entity.ParamPreviewImage;
+import com.hecom.omsclient.js.entity.ParamSaveImage;
 import com.hecom.omsclient.js.entity.ParamSetRight;
 import com.hecom.omsclient.js.entity.ParamSetTitle;
 import com.hecom.omsclient.js.entity.ParamText;
@@ -59,7 +65,10 @@ import com.hecom.omsclient.utils.PathUtils;
 import com.hecom.omsclient.utils.Tools;
 import com.hecom.omsclient.utils.tar.TarCache;
 import com.loopj.android.http.AsyncHttpResponseHandler;
+import com.loopj.android.http.FileAsyncHttpResponseHandler;
 import com.loopj.android.http.RequestParams;
+import com.nostra13.universalimageloader.core.assist.FailReason;
+import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -67,8 +76,11 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -512,6 +524,100 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
             intent.putExtra(PhotoViewerActivity.SELECT_URL, args.current);
             intent.setClass(getActivity(), PhotoViewerActivity.class);
             startActivity(intent);
+            return null;
+        }
+    };
+
+
+    private JSInteraction.JsResolver saveImageResolver = new JSInteraction.JsResolver<ParamSaveImage>(false) {
+        @Override
+        protected JSONObject onJsCall(final ParamSaveImage args) {
+//            http://gtms03.alicdn.com/tps/i3/TB1VF6uGFXXXXalaXXXmh5R_VXX-237-236.png
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    for (final String url : args.urls) {
+
+//                        OMSClientApplication.getInstance().getImageLoader().loadImage(url, new ImageLoadingListener() {
+//                            @Override
+//                            public void onLoadingStarted(String s, View view) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onLoadingFailed(String s, View view, FailReason failReason) {
+//
+//                            }
+//
+//                            @Override
+//                            public void onLoadingComplete(String s, View view, Bitmap bitmap) {
+//                                    System.out.print("asd");
+//                            }
+//
+//                            @Override
+//                            public void onLoadingCancelled(String s, View view) {
+//
+//                            }
+//                        });
+
+
+//                        RequestParams params = new RequestParams();
+//                        OMSClientApplication.getSyncHttpClientHttps().post(url, params, new FileAsyncHttpResponseHandler(OMSClientApplication.getInstance()) {
+//                            @Override
+//                            public void onFailure(int statusCode, Header[] headers, Throwable throwable, File file) {
+//                                HLog.i(TAG, "下载过程发生错误,statusCode = " + statusCode);
+//
+//                            }
+//
+//                            @Override
+//                            public void onSuccess(int statusCode, Header[] headers, File response) {
+//                                final File tarLocalFile = new File(file.getAbsolutePath() + File.separator + "OMSClient.apk");
+//                                Tools.moveFile(response, tarLocalFile, new Tools.moveFile() {
+//                                    @Override
+//                                    public void success() {
+//                                        HLog.i(TAG, url + "下载完毕");
+//                                    }
+//
+//                                    @Override
+//                                    public void failed() {
+//
+//                                    }
+//                                });
+//                            }
+//
+//                            @Override
+//                            public void onProgress(long bytesWritten, long totalSize) {
+//                                super.onProgress(bytesWritten, totalSize);
+//                            }
+//                        });
+                        try {
+                            if (PathUtils.getPublicPics() != null) {
+                                Tools.downloadFile(url, PathUtils.getPublicPics().getAbsolutePath());
+                            }
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                    JSONObject result = new JSONObject();
+                    setResult(result);
+                }
+            }).start();
+
+
+            return null;
+        }
+    };
+
+
+    private JSInteraction.JsResolver copeResolver = new JSInteraction.JsResolver<ParamClipBoard>(false) {
+        @Override
+        protected JSONObject onJsCall(final ParamClipBoard args) {
+            android.content.ClipboardManager cmb = (android.content.ClipboardManager) OMSClientApplication.getInstance().getSystemService(Context.CLIPBOARD_SERVICE);
+            cmb.setPrimaryClip(ClipData.newPlainText(null, args.text));
+            JSONObject result = new JSONObject();
+            setResult(result);
             return null;
         }
     };
@@ -1061,6 +1167,22 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
                 };
             }
         });
+
+        //保存图片到相册
+        jsInteraction.addJsResolver(JSTaskTypes.SAVEIMAGE, new JSResolverFactory() {
+            @Override
+            public JSInteraction.JsResolver create(int taskId) {
+                return saveImageResolver;
+            }
+        });
+
+        //文本拷贝到系统剪切板
+        jsInteraction.addJsResolver(JSTaskTypes.COPY, new JSResolverFactory() {
+            @Override
+            public JSInteraction.JsResolver create(int taskId) {
+                return copeResolver;
+            }
+        });
     }
 
 //    private void selectImageSource() {
@@ -1177,7 +1299,7 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
         webview.setVerticalScrollBarEnabled(false);
         //禁止弹出是否记住密码 参考http://stackoverflow.com/questions/11531778/how-to-disable-the-save-password-dialog-on-an-android-webview
 //        if (Build.VERSION.SDK_INT <= 18) {
-            webview.getSettings().setSavePassword(false);
+        webview.getSettings().setSavePassword(false);
 //        } else {
 //        // do nothing. because as google mentioned in the documentation -
 //        // "Saving passwords in WebView will not be supported in future versions"
