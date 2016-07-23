@@ -438,10 +438,11 @@ public class JSInteraction {
      */
     private void runJsFunction(String functionName, String args) {
         String arg = "";
-        if (!TextUtils.isEmpty(args)) {
-            arg += "'" + args + "'";
-        }
-        String js = functionName + "(" + arg + ")";
+//        if (!TextUtils.isEmpty(args)) {
+//            arg += "'" + args + "'";
+//        }
+//        String js = functionName + "(" + arg + ")";
+        String js = functionName + "(" + args + ")";
         Log.d(TAG, "runJsFunction js=" + js);
         runJs(js);
     }
