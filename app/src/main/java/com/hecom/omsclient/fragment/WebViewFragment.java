@@ -669,12 +669,25 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
                 final String tel_protocal = "tel:";
+                final String redcirclemanagement = "redcirclemanagement";
                 //拔打电话
-                if (!TextUtils.isEmpty(url) && url.startsWith(tel_protocal) && url.length() > tel_protocal.length()) {
-                    Intent intent = new Intent(Intent.ACTION_VIEW,
-                            Uri.parse(url));
-                    startActivity(intent);
-                    return true;
+                if (!TextUtils.isEmpty(url)) {
+
+                    if (url.startsWith(tel_protocal)) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                        startActivity(intent);
+                        return true;
+                    } else if (url.startsWith(redcirclemanagement)) {
+                        try {
+                            Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            return true;
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
                 }
 
                 jsInteraction.onNewPage();
