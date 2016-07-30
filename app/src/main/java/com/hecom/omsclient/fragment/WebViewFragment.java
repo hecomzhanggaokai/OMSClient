@@ -679,6 +679,9 @@ public class WebViewFragment extends Fragment implements View.OnClickListener {
                         return true;
                     } else if (url.startsWith(redcirclemanagement)) {
                         try {
+                            if (url.indexOf("?")>0 && !url.endsWith("?")) {
+                                url +="&times="+System.currentTimeMillis();
+                            }
                             Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
